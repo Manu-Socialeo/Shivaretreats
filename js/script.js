@@ -1,23 +1,108 @@
+/**
+ * Shiva Retreats & Yoga School Goa - Core Interactive Engine
+ */
+
 document.addEventListener('DOMContentLoaded', function () {
     // -------------------------------------------------------------------------
-    // Mobile Menu Toggle (Preserved)
+    // 1. Sticky Header Scroll Effect
+    // -------------------------------------------------------------------------
+    const header = document.querySelector('.site-header');
+    if (header) {
+        const handleScroll = () => {
+            if (window.scrollY > 40) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+    }
+
+    // -------------------------------------------------------------------------
+    // 2. Mobile Menu & Drawer Interaction
     // -------------------------------------------------------------------------
     const mobileToggle = document.querySelector('.mobile-toggle');
     const mainNav = document.querySelector('.main-nav');
 
-    if (mobileToggle) {
-        mobileToggle.addEventListener('click', function () {
+    if (mobileToggle && mainNav) {
+        mobileToggle.addEventListener('click', function (e) {
+            e.stopPropagation();
+            mobileToggle.classList.toggle('active');
             mainNav.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+
+        // Close on navigation link click (mobile)
+        const navLinks = mainNav.querySelectorAll('a:not(.has-dropdown > a)');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileToggle.classList.remove('active');
+                mainNav.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            });
+        });
+
+        // Handle mobile dropdown toggle
+        const dropdownToggles = mainNav.querySelectorAll('.has-dropdown > a');
+        dropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', function (e) {
+                if (window.innerWidth <= 900) {
+                    e.preventDefault();
+                    this.parentElement.classList.toggle('open');
+                }
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function (e) {
+            if (mainNav.classList.contains('active') && !mainNav.contains(e.target) && !mobileToggle.contains(e.target)) {
+                mobileToggle.classList.remove('active');
+                mainNav.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
+        });
+
+        // Escape key listener
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && mainNav.classList.contains('active')) {
+                mobileToggle.classList.remove('active');
+                mainNav.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
         });
     }
 
     // -------------------------------------------------------------------------
-    // Hero Slideshow Logic (Preserved)
+    // 3. Scroll Reveal Animations (IntersectionObserver)
+    // -------------------------------------------------------------------------
+    const revealElements = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window && revealElements.length > 0) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    } else {
+        // Fallback for older browsers
+        revealElements.forEach(el => el.classList.add('active'));
+    }
+
+    // -------------------------------------------------------------------------
+    // 4. Hero Slideshow
     // -------------------------------------------------------------------------
     const heroSlides = document.querySelectorAll('.hero-slide');
-    if (heroSlides.length > 0) {
+    if (heroSlides.length > 1) {
         let currentSlide = 0;
-        const slideInterval = 5000;
+        const slideInterval = 5500;
 
         setInterval(() => {
             heroSlides[currentSlide].classList.remove('active');
@@ -27,16 +112,67 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // -------------------------------------------------------------------------
-    // Booking Wizard Logic (NEW)
+    // 5. Course Catalog Filtering (all-courses.html & index.html)
+    // -------------------------------------------------------------------------
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const courseCards = document.querySelectorAll('.course-card[data-category]');
+
+    if (filterButtons.length > 0 && courseCards.length > 0) {
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+
+                const filterValue = this.getAttribute('data-filter');
+
+                courseCards.forEach(card => {
+                    const categories = card.getAttribute('data-category').split(' ');
+                    if (filterValue === 'all' || categories.includes(filterValue)) {
+                        card.style.display = 'flex';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 50);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(15px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+    }
+
+    // -------------------------------------------------------------------------
+    // 6. Interactive FAQ Accordion
+    // -------------------------------------------------------------------------
+    const faqItems = document.querySelectorAll('.faq-item');
+    if (faqItems.length > 0) {
+        faqItems.forEach(item => {
+            const questionBtn = item.querySelector('.faq-question');
+            if (questionBtn) {
+                questionBtn.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    // Optional: Close other FAQs for clean single-open accordions
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) otherItem.classList.remove('active');
+                    });
+                    item.classList.toggle('active', !isActive);
+                });
+            }
+        });
+    }
+
+    // -------------------------------------------------------------------------
+    // 7. Booking Wizard Logic
     // -------------------------------------------------------------------------
     const wizardForm = document.getElementById('bookingWizardForm');
-
-    // Check if we are on the booking page
     if (wizardForm) {
         let currentStep = 1;
         const totalSteps = 7;
 
-        // Fee Structure
         const prices = {
             'Shared Cottage': 800,
             'Private Cottage': 1100,
@@ -44,15 +180,13 @@ document.addEventListener('DOMContentLoaded', function () {
             'Advance': 300
         };
 
-        // Initialize Wizard
         showStep(currentStep);
 
-        // Global functions for inline onclick handlers
         window.nextStep = function () {
             if (validateStep(currentStep)) {
                 currentStep++;
                 showStep(currentStep);
-                updateFee(); // Update fee whenever we move steps (especially to Summary)
+                updateFee();
             }
         };
 
@@ -64,10 +198,9 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         window.selectOption = function (element, inputId, value) {
-            // Update hidden input
-            document.getElementById(inputId).value = value;
+            const inputEl = document.getElementById(inputId);
+            if (inputEl) inputEl.value = value;
 
-            // Visual feedback
             const siblings = element.parentElement.children;
             for (let i = 0; i < siblings.length; i++) {
                 if (siblings[i].classList.contains('form-option-card')) {
@@ -76,105 +209,50 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             element.classList.add('selected');
 
-            // Conditional Logic for Stay Type
             if (inputId === 'stayType') {
-                const accomOptions = document.getElementById('accommodationOptions');
                 const accomHidden = document.getElementById('roomType');
-
-                if (value === 'Non-Residential') {
-                    // Hide Accommodation step? Or just skip it?
-                    // Better interaction: Auto-set roomType to 'None' and maybe disable next step options?
-                    // But simpler: Just hide the options in step 4 or handle logic.
-                    // Let's handle logic: If non-res, step 4 is effectively skipped or simplified.
+                if (value === 'Non-Residential' && accomHidden) {
                     accomHidden.value = 'None';
-                    // We will handle skipping logic in nextStep() if we wanted, 
-                    // but for simplicity let's just let user click next on step 4 (maybe separate logic).
-                    // Actually, let's keep it simple: Standard flow.
-                } else {
-                    accomHidden.value = ''; // Reset if going back to Residential
                 }
             }
         };
 
         window.togglePaymentInfo = function () {
             const box = document.getElementById('paymentInfo');
-            if (box.style.display === 'block') {
-                box.style.display = 'none';
-            } else {
-                box.style.display = 'block';
+            if (box) {
+                box.style.display = box.style.display === 'block' ? 'none' : 'block';
             }
         };
 
         window.sendApplication = function () {
-            // Gather Data
-            const name = document.getElementById('fullName').value;
-            const email = document.getElementById('email').value;
-            const country = document.getElementById('country').value;
-            const phone = document.getElementById('whatsapp').value;
-            const gender = document.getElementById('gender').value;
+            const name = document.getElementById('fullName')?.value || '';
+            const email = document.getElementById('email')?.value || '';
+            const country = document.getElementById('country')?.value || '';
+            const phone = document.getElementById('whatsapp')?.value || '';
+            const gender = document.getElementById('gender')?.value || '';
+            const course = document.getElementById('courseSelect')?.value || '';
+            const startDate = document.getElementById('startDate')?.value || '';
+            const stayType = document.getElementById('stayType')?.value || '';
+            const roomType = document.getElementById('roomType')?.value || '';
+            const details = document.getElementById('message')?.value || '';
 
-            const course = document.getElementById('courseSelect').value;
-            const startDate = document.getElementById('startDate').value;
-
-            const stayType = document.getElementById('stayType').value;
-            const roomType = document.getElementById('roomType').value;
-
-            const details = document.getElementById('message').value;
-
-            // Fee Calc
-            let total = 0;
-            if (stayType === 'Non-Residential') {
-                total = prices['Non-Residential'];
-            } else {
-                total = prices[roomType] || 0;
-            }
+            let total = stayType === 'Non-Residential' ? prices['Non-Residential'] : (prices[roomType] || 0);
             const advance = prices['Advance'];
             const balance = total - advance;
 
-            // Construct Email Body
             const subject = `Booking Application: ${name} - ${course}`;
-            const body = `NAMASTE SHIVA YOGA TEAM,
+            const body = `NAMASTE SHIVA YOGA GOA TEAM,\n\nI would like to apply for a course/retreat in Goa. Here are my booking details:\n\n--- PERSONAL DETAILS ---\nName: ${name}\nEmail: ${email}\nPhone / WhatsApp: ${phone}\nCountry: ${country}\nGender: ${gender}\n\n--- COURSE DETAILS ---\nCourse / Retreat: ${course}\nPreferred Start Date: ${startDate}\n\n--- ACCOMMODATION ---\nStay Type: ${stayType}\nRoom Preference: ${roomType}\n\n--- FEE SUMMARY ---\nTotal Course & Stay Fee: €${total}\nAdvance Deposit: €${advance}\nBalance Due on Arrival: €${balance}\n\n--- ADDITIONAL NOTES / DIETARY ---\n${details}\n\n---------------------------------\nPlease confirm availability and next steps.`;
 
-I would like to apply for a course. Here are my details:
-
---- PERSONAL DETAILS ---
-Name: ${name}
-Email: ${email}
-Phone/WhatsApp: ${phone}
-Country: ${country}
-Gender: ${gender}
-
---- COURSE DETAILS ---
-Course: ${course}
-Start Date: ${startDate}
-
---- ACCOMMODATION ---
-Stay Type: ${stayType}
-Room Preference: ${roomType}
-
---- FEE SUMMARY ---
-Total Fee: €${total}
-Advance Paid: €${300} (Check Screenshot or Pending)
-Balance Due: €${balance}
-
---- MESSAGE ---
-${details}
-
----------------------------------
-Please confirm my booking.
-`;
-
-            // Open Mailto
             window.open(`mailto:contact@shivaretreats.com?cc=contact@shivaretreats.com&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
         };
 
         window.updateFee = function () {
-            const stayType = document.getElementById('stayType').value;
-            const roomType = document.getElementById('roomType').value;
-            const course = document.getElementById('courseSelect').value;
+            const stayType = document.getElementById('stayType')?.value;
+            const roomType = document.getElementById('roomType')?.value;
+            const course = document.getElementById('courseSelect')?.value;
 
-            // Display Texts
-            document.getElementById('summaryCourse').innerText = course || 'Not Selected';
+            const summaryCourseEl = document.getElementById('summaryCourse');
+            if (summaryCourseEl) summaryCourseEl.innerText = course || 'Not Selected';
 
             let total = 0;
             let roomText = '-';
@@ -187,100 +265,85 @@ Please confirm my booking.
                     total = prices[roomType] || 0;
                     roomText = `Residential - ${roomType}`;
                 } else {
-                    roomText = 'Residential (No Room Selected)';
+                    roomText = 'Residential (Room Pending)';
                 }
             }
 
-            document.getElementById('summaryRoom').innerText = roomText;
-            document.getElementById('totalFee').innerText = '€' + total;
+            const summaryRoomEl = document.getElementById('summaryRoom');
+            const totalFeeEl = document.getElementById('totalFee');
+            if (summaryRoomEl) summaryRoomEl.innerText = roomText;
+            if (totalFeeEl) totalFeeEl.innerText = '€' + total;
         };
 
         function showStep(n) {
-            // Validate limits
             if (n < 1) n = 1;
             if (n > totalSteps) n = totalSteps;
 
-            // Hide all steps
             const steps = document.querySelectorAll('.wizard-step-content');
             steps.forEach(step => step.classList.remove('active'));
 
-            // Show current step
             const currentStepEl = document.querySelector(`.wizard-step-content[data-step="${n}"]`);
-            if (currentStepEl) {
-                currentStepEl.classList.add('active');
+            if (currentStepEl) currentStepEl.classList.add('active');
+
+            const progressEl = document.getElementById('progressFill');
+            if (progressEl) {
+                const progress = ((n - 1) / (totalSteps - 1)) * 100;
+                progressEl.style.width = progress + '%';
             }
 
-            // Update Progress Bar
-            const progress = ((n - 1) / (totalSteps - 1)) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-
-            // Special Handling (Skip Step 4 if Non-Residential)
-            // If we are at Step 4 and stayType is Non-Residential, auto-skip to 5
             if (n === 4) {
-                const stay = document.getElementById('stayType').value;
-                if (stay === 'Non-Residential') {
-                    // If moving forward (prev step was 3), go next
-                    // Checks are tricky here inside showStep. 
-                    // Better logic: handle this in nextStep/prevStep. 
-                    // But for now, let's just let user click "Next" on Step 4 (maybe hide options).
-                    const opts = document.getElementById('accommodationOptions');
-                    if (stay === 'Non-Residential') {
-                        opts.style.display = 'none';
-                        // Add a temporary text
-                        if (!document.getElementById('nonResMsg')) {
-                            const msg = document.createElement('p');
-                            msg.id = 'nonResMsg';
-                            msg.innerText = "You selected Non-Residential. No accommodation selection needed.";
-                            msg.style.textAlign = 'center';
-                            opts.parentNode.insertBefore(msg, opts);
-                        }
-                    } else {
-                        opts.style.display = 'block';
-                        const msg = document.getElementById('nonResMsg');
-                        if (msg) msg.remove();
+                const stay = document.getElementById('stayType')?.value;
+                const opts = document.getElementById('accommodationOptions');
+                if (stay === 'Non-Residential' && opts) {
+                    opts.style.display = 'none';
+                    if (!document.getElementById('nonResMsg')) {
+                        const msg = document.createElement('p');
+                        msg.id = 'nonResMsg';
+                        msg.innerText = "You selected Non-Residential. No room selection needed.";
+                        msg.style.textAlign = 'center';
+                        msg.style.padding = '20px 0';
+                        opts.parentNode.insertBefore(msg, opts);
                     }
+                } else if (opts) {
+                    opts.style.display = 'block';
+                    const msg = document.getElementById('nonResMsg');
+                    if (msg) msg.remove();
                 }
             }
         }
 
         function validateStep(n) {
             const stepEl = document.querySelector(`.wizard-step-content[data-step="${n}"]`);
+            if (!stepEl) return true;
+
             const inputs = stepEl.querySelectorAll('input, select');
             let valid = true;
 
             inputs.forEach(input => {
-                if (input.hasAttribute('required') && !input.value) {
+                if (input.hasAttribute('required') && !input.value.trim()) {
                     valid = false;
-                    input.style.borderColor = 'red';
-                    // Reset color on input
+                    input.style.borderColor = '#c46445';
                     input.addEventListener('input', function () {
-                        this.style.borderColor = '#ddd';
-                    });
+                        this.style.borderColor = 'var(--color-border)';
+                    }, { once: true });
                 }
             });
 
-            // Specific check for roomType on Step 4
             if (n === 4) {
-                const stay = document.getElementById('stayType').value;
-                const room = document.getElementById('roomType').value;
+                const stay = document.getElementById('stayType')?.value;
+                const room = document.getElementById('roomType')?.value;
                 if (stay === 'Residential' && !room) {
-                    alert("Please select a room type.");
+                    alert("Please select your preferred room accommodation.");
                     valid = false;
                 }
             }
 
-            if (!valid) {
-                // Only alert for general inputs if you want, or just rely on red borders
-                // alert("Please fill in all required fields.");
-            }
             return valid;
         }
     }
 });
 
-// -------------------------------------------------------------------------
-// Global Helper for Teachers Section Scroll
-// -------------------------------------------------------------------------
+// Helper for horizontal card scrolling
 window.scrollSection = function (id, distance) {
     const container = document.getElementById(id);
     if (container) {

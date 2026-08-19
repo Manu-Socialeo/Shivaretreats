@@ -1,0 +1,16 @@
+{
+  "name": "Shiva Yoga Goa - Yoga Teacher Training & Retreats",
+  "short_name": "Shiva Yoga",
+  "description": "Internationally Certified Yoga Teacher Training Courses & Retreats in Arambol, Goa, India.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbf8f1",
+  "theme_color": "#2e2620",
+  "icons": [
+    {
+      "src": "assets/images/logo-dark.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
