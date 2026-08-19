@@ -1347,28 +1347,70 @@ ul {
 }
 
 /* --------------------------------------------------------------------------
-   17. Responsive Media Queries
+   17. Comprehensive Mobile & Tablet Optimizations
    -------------------------------------------------------------------------- */
+/* Prevent iOS auto-zoom on inputs */
+input, select, textarea {
+    font-size: 16px !important;
+}
+
+/* Mobile backdrop overlay */
+.mobile-nav-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-normal);
+}
+
+body.menu-open .mobile-nav-backdrop {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Tablet Optimizations (768px - 1024px) */
 @media (max-width: 1024px) {
+    .container {
+        padding: 0 24px;
+    }
+
     .footer-container {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+    }
+
+    .courses-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    .hero-content {
+        max-width: 100%;
     }
 }
 
-@media (max-width: 900px) {
+/* Tablet & Mobile Nav Trigger (< 992px) */
+@media (max-width: 992px) {
     .main-nav {
         position: fixed;
         top: 0;
         right: -100%;
-        width: 80%;
-        max-width: 360px;
+        width: 85%;
+        max-width: 380px;
         height: 100vh;
-        background: var(--color-white);
-        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
-        padding: 90px 30px 40px;
-        transition: right var(--transition-normal);
-        z-index: 1001;
+        background: #fff;
+        box-shadow: -10px 0 35px rgba(0, 0, 0, 0.2);
+        padding: 85px 25px 40px;
+        transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 1002;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .main-nav.active {
@@ -1377,54 +1419,99 @@ ul {
 
     .main-nav ul {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 18px;
+        align-items: stretch;
+        gap: 12px;
         width: 100%;
     }
 
     .main-nav li {
         width: 100%;
+        border-bottom: 1px solid var(--color-border-light);
+        padding-bottom: 10px;
     }
 
     .main-nav a {
-        font-size: 1.1rem;
-        display: block;
-        padding: 8px 0;
+        font-size: 1.05rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        font-weight: 600;
+    }
+
+    .has-dropdown > a {
+        cursor: pointer;
+    }
+
+    .has-dropdown > a i {
+        transition: transform var(--transition-fast);
+    }
+
+    .has-dropdown.open > a i {
+        transform: rotate(180deg);
+        color: var(--color-gold);
     }
 
     .dropdown {
         position: static;
         box-shadow: none;
         border: none;
-        background: var(--color-secondary);
+        background: var(--color-sand);
         opacity: 1;
         visibility: visible;
         transform: none;
         display: none;
-        margin-top: 8px;
-        padding: 8px 0;
+        margin-top: 6px;
+        padding: 8px 12px;
+        border-radius: var(--radius-sm);
     }
 
     .has-dropdown.open .dropdown {
         display: block;
     }
 
+    .dropdown a {
+        font-size: 0.92rem;
+        padding: 8px 10px;
+    }
+
     .mobile-toggle {
         display: flex;
     }
 
-    .header-cta {
-        display: none;
-    }
-
-    .floating-book-pill {
-        display: block;
+    .header-right {
+        margin-right: 10px;
     }
 }
 
-@media (max-width: 600px) {
+/* Smartphone & Small Screens (< 768px) */
+@media (max-width: 768px) {
     :root {
-        --section-padding: 60px 0;
+        --section-padding: 55px 0;
+        --section-padding-sm: 35px 0;
+    }
+
+    .container {
+        padding: 0 18px;
+    }
+
+    .header-container {
+        padding: 10px 18px;
+    }
+
+    .logo-text {
+        font-size: 1.3rem;
+    }
+
+    .header-right .btn {
+        padding: 8px 16px;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+    }
+
+    /* Stack Grids */
+    .courses-grid {
+        grid-template-columns: 1fr;
     }
 
     .footer-container {
@@ -1432,22 +1519,58 @@ ul {
         gap: 35px;
     }
 
-    .courses-grid {
-        grid-template-columns: 1fr;
+    /* Booking Wizard Mobile Tweaks */
+    .booking-wizard-container {
+        padding: 24px 16px !important;
+        border-radius: var(--radius-md) !important;
     }
 
+    .wizard-steps-indicator {
+        margin-bottom: 24px;
+    }
+
+    .step-circle {
+        width: 30px;
+        height: 30px;
+        font-size: 0.78rem;
+    }
+
+    .step-indicator-title {
+        font-size: 0.65rem;
+        letter-spacing: 0;
+    }
+
+    .payment-tabs-nav {
+        flex-direction: column;
+    }
+
+    .payment-tab-btn {
+        width: 100%;
+    }
+
+    .voucher-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    .booking-voucher-card {
+        padding: 20px 16px !important;
+    }
+
+    .qr-code-img {
+        width: 160px;
+        height: 160px;
+    }
+
+    /* Floating WhatsApp Button */
     .floating-actions {
-        bottom: 20px;
-        right: 15px;
-    }
-
-    .floating-whatsapp span {
-        display: none;
+        bottom: 18px;
+        right: 14px;
     }
 
     .floating-whatsapp {
-        padding: 14px;
-        border-radius: 50%;
+        padding: 12px 18px;
+        font-size: 0.85rem;
     }
 }
 

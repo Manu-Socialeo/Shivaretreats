@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const dropdownToggles = mainNav.querySelectorAll('.has-dropdown > a');
         dropdownToggles.forEach(toggle => {
             toggle.addEventListener('click', function (e) {
-                if (window.innerWidth <= 900) {
+                if (window.innerWidth <= 992) {
                     e.preventDefault();
                     this.parentElement.classList.toggle('open');
                 }
