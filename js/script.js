@@ -346,3 +346,15 @@ window.scrollSection = function (id, distance) {
         container.scrollBy({ left: distance, behavior: 'smooth' });
     }
 };
+
+// -------------------------------------------------------------------------
+// Load Shiva Yoga AI Chatbot Widget
+// -------------------------------------------------------------------------
+(function loadShivaChatbot() {
+    if (document.getElementById('shivaChatToggle')) return;
+    const script = document.createElement('script');
+    const isSubdir = window.location.pathname.includes('/courses/') || window.location.pathname.includes('/blog/');
+    script.src = isSubdir ? '../js/chatbot.js' : 'js/chatbot.js';
+    script.defer = true;
+    document.body.appendChild(script);
+})();
