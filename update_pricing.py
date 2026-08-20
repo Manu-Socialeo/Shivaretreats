@@ -1,4 +1,20 @@
-<!DOCTYPE html>
+#!/usr/bin/env python3
+"""
+Updates pricing across the entire Shiva Yoga website based on the official pricing chart.
+"""
+
+import os
+import re
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# -------------------------------------------------------------
+# 1. GENERATE UPDATED booking.html
+# -------------------------------------------------------------
+def update_booking():
+    booking_path = os.path.join(BASE_DIR, "booking.html")
+    
+    html = r'''<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -801,4 +817,178 @@
     </script>
     <script src="js/script.js"></script>
 </body>
-</html>
+</html>'''
+
+    with open(booking_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+    print("Done: Updated booking.html with full dynamic price lookup matrix")
+
+
+# -------------------------------------------------------------
+# 2. UPDATE payment-details.html WITH BEAUTIFUL PRICING TABLE
+# -------------------------------------------------------------
+def update_payment_details():
+    p_path = os.path.join(BASE_DIR, "payment-details.html")
+    with open(p_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    # Create the modern responsive pricing table block
+    pricing_table_html = r'''
+        <!-- Official Course Fee Chart -->
+        <div style="background:#fff;border-radius:var(--radius-lg);padding:35px;box-shadow:var(--shadow-sm);border:1px solid var(--color-border);margin-bottom:35px;">
+            <div style="text-align:center;margin-bottom:28px;">
+                <span class="section-subtitle">Official Transparent Pricing</span>
+                <h3 style="font-family:'Marcellus',serif;font-size:1.8rem;color:var(--color-primary);margin-top:5px;">Course &amp; Accommodation Fee Schedule</h3>
+                <p style="color:var(--color-text-muted);max-width:600px;margin:0 auto;font-size:0.95rem;">All packages include tuition, certified curriculum, accommodation, and daily wholesome meals.</p>
+            </div>
+
+            <!-- Responsive Table Container -->
+            <div style="overflow-x:auto;">
+                <table style="width:100%;border-collapse:collapse;text-align:left;font-size:0.95rem;">
+                    <thead>
+                        <tr style="background:var(--color-sand);border-bottom:2px solid var(--color-gold);">
+                            <th style="padding:16px 20px;font-family:'Marcellus',serif;font-size:1.1rem;color:var(--color-primary);">Courses &amp; Retreats</th>
+                            <th style="padding:16px 20px;text-align:center;color:var(--color-primary);font-weight:700;"><i class="fas fa-bed" style="color:var(--color-gold);margin-right:6px;"></i>Dorm<br><span style="font-size:0.75rem;font-weight:400;color:var(--color-text-muted);">3 - 4 Same Gender</span></th>
+                            <th style="padding:16px 20px;text-align:center;color:var(--color-primary);font-weight:700;"><i class="fas fa-home" style="color:var(--color-gold);margin-right:6px;"></i>Private<br><span style="font-size:0.75rem;font-weight:400;color:var(--color-text-muted);">Private Room</span></th>
+                            <th style="padding:16px 20px;text-align:center;color:var(--color-primary);font-weight:700;"><i class="fas fa-heart" style="color:var(--color-gold);margin-right:6px;"></i>Twin Sharing<br><span style="font-size:0.75rem;font-weight:400;color:var(--color-text-muted);">Couple / Friends (2 People)</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid #eee;background:rgba(198,159,84,0.06);">
+                            <td style="padding:16px 20px;font-weight:700;color:var(--color-primary);">
+                                <span style="display:inline-block;background:var(--color-gold);color:#fff;font-size:0.7rem;padding:2px 8px;border-radius:4px;margin-right:6px;">★ Most Popular</span><br>
+                                200 Hours Multi-Style Yoga TTC &ndash; 21 Days
+                            </td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.15rem;">999€</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.15rem;">1599€</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.15rem;">2399€<br><span style="font-size:0.75rem;font-weight:500;color:var(--color-text-muted);">(for 2 People)</span></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid #eee;">
+                            <td style="padding:16px 20px;font-weight:600;">300 Hours Advanced Yoga TTC &ndash; 29 Days</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">1199€</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">1799€</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">2999€<br><span style="font-size:0.75rem;font-weight:500;color:var(--color-text-muted);">(for 2 People)</span></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid #eee;">
+                            <td style="padding:16px 20px;font-weight:600;">50 Hours Yin Yoga Teacher Training &ndash; 6 Days</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">599€</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">899€</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">1299€<br><span style="font-size:0.75rem;font-weight:500;color:var(--color-text-muted);">(for 2 People)</span></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid #eee;">
+                            <td style="padding:16px 20px;font-weight:600;">50 Hours Ayurveda &amp; Yogic Lifestyle Course &ndash; 6 Days</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">599€</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">899€</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">1299€<br><span style="font-size:0.75rem;font-weight:500;color:var(--color-text-muted);">(for 2 People)</span></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid #eee;">
+                            <td style="padding:16px 20px;font-weight:600;">100 Hours Yoga TTC &ndash; 11 Days</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">599€</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">999€</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">1399€<br><span style="font-size:0.75rem;font-weight:500;color:var(--color-text-muted);">(for 2 People)</span></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid #eee;">
+                            <td style="padding:16px 20px;font-weight:600;">50 Hours Prenatal Teacher Training Course &ndash; 6 Days</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">599€</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">899€</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">1299€<br><span style="font-size:0.75rem;font-weight:500;color:var(--color-text-muted);">(for 2 People)</span></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid #eee;">
+                            <td style="padding:16px 20px;font-weight:600;">3 / 5 / 7 / 9 Days Yoga Retreat</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">50€ / Day</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">100€ / Day</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">150€ / Day<br><span style="font-size:0.75rem;font-weight:500;color:var(--color-text-muted);">(2 People)</span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:16px 20px;font-weight:600;">Flexible 200 &amp; 300 Hours TTC (Up to 30 Days)</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">1199€</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">1799€</td>
+                            <td style="padding:16px 20px;text-align:center;font-weight:800;color:var(--color-primary);font-size:1.1rem;">2999€<br><span style="font-size:0.75rem;font-weight:500;color:var(--color-text-muted);">(for 2 People)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="text-align:center;margin-top:25px;">
+                <a href="booking.html" class="btn btn-gold btn-lg"><i class="fas fa-check-circle"></i> Reserve Your Spot Online &rarr;</a>
+            </div>
+        </div>
+'''
+
+    # Replace or insert into payment-details.html before the payment methods grid
+    if 'Course &amp; Accommodation Fee Schedule' not in content:
+        target_str = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:35px;">'
+        if target_str in content:
+            content = content.replace(target_str, pricing_table_html + '\n' + target_str)
+            with open(p_path, 'w', encoding='utf-8') as f:
+                f.write(content)
+            print("Done: Injected pricing matrix table into payment-details.html")
+
+
+# -------------------------------------------------------------
+# 3. UPDATE all-courses.html PRICES
+# -------------------------------------------------------------
+def update_all_courses():
+    ac_path = os.path.join(BASE_DIR, "all-courses.html")
+    with open(ac_path, 'r', encoding='utf-8') as f:
+        c = f.read()
+
+    # 200 Hr TTC
+    c = c.replace('€800 / ₹72,000', '€999 / ₹90,000')
+    c = c.replace('€800', '€999')
+    # 300 Hr TTC
+    c = c.replace('€1,100 / ₹98,000', '€1,199 / ₹1,08,000')
+    c = c.replace('€1100', '€1199')
+    # 50 Hr Yin
+    c = c.replace('€400 / ₹36,000', '€599 / ₹54,000')
+    c = c.replace('€400', '€599')
+    # 50 Hr Sound
+    c = c.replace('€450 / ₹40,000', '€599 / ₹54,000')
+    c = c.replace('€450', '€599')
+    # 50 Hr Aerial
+    c = c.replace('€420 / ₹38,000', '€599 / ₹54,000')
+    c = c.replace('€420', '€599')
+    # 6-Day Prenatal
+    c = c.replace('€450 / ₹40,500', '€599 / ₹54,000')
+    # Ayurveda
+    c = c.replace('€380 / ₹34,000', '€599 / ₹54,000')
+    # Retreats
+    c = c.replace('€180 / ₹16,000', '€50 / Day')
+
+    with open(ac_path, 'w', encoding='utf-8') as f:
+        f.write(c)
+    print("Done: Updated starting prices in all-courses.html")
+
+
+# -------------------------------------------------------------
+# 4. UPDATE INDIVIDUAL COURSE PAGES
+# -------------------------------------------------------------
+def update_course_pages():
+    course_files = [
+        ("courses/200-hr-ttc.html", "€800", "€999"),
+        ("courses/300-hr-ttc.html", "€1100", "€1199"),
+        ("courses/yin-yoga-ttc.html", "€400", "€599"),
+        ("courses/sound-healing-ttc.html", "€450", "€599"),
+        ("courses/aerial-yoga-ttc.html", "€420", "€599"),
+        ("courses/prenatal-yoga-ttc.html", "€450", "€599"),
+        ("courses/spanish-yoga-ttc.html", "€800", "€999"),
+        ("courses/ayurveda.html", "€380", "€599"),
+        ("courses/flexible-ttc.html", "€450", "€1,199"),
+    ]
+
+    for rel_path, old_p, new_p in course_files:
+        full_path = os.path.join(BASE_DIR, rel_path)
+        if os.path.exists(full_path):
+            with open(full_path, 'r', encoding='utf-8') as f:
+                fc = f.read()
+            fc = fc.replace(old_p, new_p)
+            with open(full_path, 'w', encoding='utf-8') as f:
+                f.write(fc)
+            print(f"Done: Updated pricing in {rel_path}")
+
+
+if __name__ == "__main__":
+    update_booking()
+    update_payment_details()
+    update_all_courses()
+    update_course_pages()
+    print("\nAll pricing updates applied successfully!")
