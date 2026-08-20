@@ -12,8 +12,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" href="assets/images/logo-dark.png" type="image/png">
 
-    <!-- html2pdf.js for 1-click clean PDF download -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- html2canvas and jsPDF for exact page-by-page PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <style>
         :root {
@@ -24,7 +25,7 @@
             --color-border: #e8ddd0;
             --color-text: #3e271f;
             --color-text-muted: #665c54;
-            --color-sage: #6b8e23;
+            --color-sage: #5b841e;
         }
 
         * {
@@ -34,18 +35,18 @@
         }
 
         body {
-            background: #e9e2d5;
+            background: #dcd3c5;
             color: var(--color-text);
             font-family: 'Catamaran', sans-serif;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
         }
 
-        /* Top Sticky Floating Action Bar (Never included in PDF) */
+        /* Top Sticky Action Bar (Never printed/downloaded) */
         .top-action-bar {
             background: linear-gradient(135deg, #2e1d17 0%, #4a2d21 100%);
             color: #fff;
-            padding: 14px 24px;
+            padding: 12px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -65,7 +66,7 @@
             color: #fff;
             text-decoration: none;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -85,7 +86,7 @@
             padding: 9px 20px;
             border-radius: 50px;
             font-family: inherit;
-            font-size: 0.88rem;
+            font-size: 0.86rem;
             font-weight: 800;
             cursor: pointer;
             text-decoration: none;
@@ -112,38 +113,31 @@
             color: #fff;
         }
 
-        .btn-book-now:hover {
-            background: #1eb954;
-            transform: translateY(-2px);
-        }
-
         /* --------------------------------------------------------------------------
-           A4 Document Container (5 Pages Structure)
+           A4 Document Container (Fixed Width: 794px = 210mm, Height: 1123px = 297mm)
            -------------------------------------------------------------------------- */
         .pdf-document-wrapper {
-            width: 210mm;
+            width: 794px;
             margin: 25px auto 60px;
         }
 
         .a4-page {
-            width: 210mm;
-            min-height: 297mm;
-            height: 297mm;
+            width: 794px;
+            height: 1123px;
+            max-height: 1123px;
             background: #ffffff;
             margin-bottom: 25px;
-            padding: 16mm 18mm 14mm 18mm;
+            padding: 40px 50px 30px 50px;
             position: relative;
-            box-shadow: 0 10px 40px rgba(62, 39, 31, 0.12);
-            border-radius: 6px;
+            box-shadow: 0 10px 35px rgba(62, 39, 31, 0.12);
+            border-radius: 4px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            page-break-after: always;
-            break-after: page;
         }
 
-        /* Running Page Header & Footer */
+        /* Running Header & Footer */
         .page-header-micro {
             display: flex;
             justify-content: space-between;
@@ -156,10 +150,6 @@
             text-transform: uppercase;
             letter-spacing: 0.8px;
             font-weight: 700;
-        }
-
-        .page-header-micro img {
-            height: 18px;
         }
 
         .page-footer-micro {
@@ -179,9 +169,10 @@
             font-weight: 700;
         }
 
-        /* Page Content Area */
         .page-content {
             flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Typography */
@@ -199,9 +190,9 @@
         }
 
         .section-h2 {
-            font-size: 1.35rem;
+            font-size: 1.28rem;
             color: var(--color-primary);
-            margin: 14px 0 10px;
+            margin: 12px 0 8px;
             padding-bottom: 4px;
             border-bottom: 2px solid var(--color-gold);
             display: flex;
@@ -211,19 +202,19 @@
 
         .section-h2 i {
             color: var(--color-gold);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
         }
 
-        /* PAGE 1 SPECIFIC STYLES */
+        /* PAGE 1 */
         .p1-brand-center {
             text-align: center;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
         }
 
         .p1-logo {
-            width: 72px;
-            height: 72px;
-            margin: 0 auto 8px;
+            width: 68px;
+            height: 68px;
+            margin: 0 auto 6px;
             display: block;
         }
 
@@ -232,48 +223,48 @@
             background: rgba(198, 159, 84, 0.15);
             color: var(--color-gold-dark);
             font-weight: 800;
-            font-size: 0.78rem;
-            padding: 4px 14px;
+            font-size: 0.76rem;
+            padding: 3px 12px;
             border-radius: 50px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 6px;
+            letter-spacing: 0.8px;
+            margin-bottom: 4px;
             border: 1px solid var(--color-gold);
         }
 
         .p1-title {
-            font-size: 1.95rem;
-            margin: 4px 0;
+            font-size: 1.85rem;
+            margin: 2px 0;
             color: var(--color-primary);
         }
 
         .p1-sub {
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             color: var(--color-text-muted);
             font-weight: 600;
         }
 
         .p1-hero-img {
             width: 100%;
-            height: 200px;
+            height: 190px;
             object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 14px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
         }
 
         .highlights-strip {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 8px;
-            margin: 10px 0 14px;
+            margin: 8px 0 12px;
         }
 
         .hl-card {
             background: var(--color-sand);
             border: 1px solid var(--color-border);
-            border-radius: 8px;
-            padding: 8px 6px;
+            border-radius: 6px;
+            padding: 7px 4px;
             text-align: center;
             font-size: 0.78rem;
             font-weight: 700;
@@ -282,7 +273,7 @@
 
         .hl-card i {
             color: var(--color-gold);
-            margin-right: 4px;
+            margin-right: 3px;
         }
 
         .quick-matrix {
@@ -291,14 +282,14 @@
             gap: 8px;
             background: var(--color-sand);
             border: 1px solid var(--color-border);
-            border-radius: 10px;
-            padding: 10px;
+            border-radius: 8px;
+            padding: 9px;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .qm-item .qm-lbl {
-            font-size: 0.65rem;
+            font-size: 0.64rem;
             text-transform: uppercase;
             color: #888;
             font-weight: 700;
@@ -306,29 +297,29 @@
         }
 
         .qm-item .qm-val {
-            font-size: 0.88rem;
+            font-size: 0.86rem;
             font-weight: 800;
             color: var(--color-primary);
         }
 
-        /* PAGE 2 SPECIFIC STYLES (PRICING & ROOMS) */
+        /* PAGE 2 */
         .inc-two-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .inc-box {
             background: var(--color-sand);
             border: 1px solid var(--color-border);
             border-radius: 8px;
-            padding: 12px 14px;
+            padding: 10px 14px;
         }
 
         .inc-box h4 {
-            font-size: 0.95rem;
-            margin-bottom: 6px;
+            font-size: 0.92rem;
+            margin-bottom: 5px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -336,15 +327,15 @@
 
         .inc-box ul {
             padding-left: 16px;
-            font-size: 0.82rem;
-            line-height: 1.65;
+            font-size: 0.8rem;
+            line-height: 1.6;
             color: #555;
         }
 
         .pdf-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 10px 0 14px;
+            margin: 8px 0 12px;
             border-radius: 8px;
             overflow: hidden;
             border: 1px solid var(--color-border);
@@ -353,15 +344,15 @@
         .pdf-table th {
             background: var(--color-primary);
             color: #fff;
-            padding: 9px 12px;
-            font-size: 0.82rem;
+            padding: 8px 12px;
+            font-size: 0.8rem;
             text-align: left;
         }
 
         .pdf-table td {
-            padding: 9px 12px;
+            padding: 8px 12px;
             border-bottom: 1px solid #eee;
-            font-size: 0.84rem;
+            font-size: 0.82rem;
         }
 
         .pdf-table tr:nth-child(even) {
@@ -369,7 +360,7 @@
         }
 
         .price-badge {
-            font-size: 1.05rem;
+            font-size: 1.02rem;
             font-weight: 800;
             color: var(--color-primary);
         }
@@ -378,7 +369,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .r-card {
@@ -391,22 +382,22 @@
 
         .r-card img {
             width: 100%;
-            height: 85px;
+            height: 80px;
             object-fit: cover;
             display: block;
         }
 
         .r-card-body {
-            padding: 8px;
+            padding: 6px;
         }
 
         .r-card-body h4 {
-            font-size: 0.84rem;
+            font-size: 0.82rem;
             margin-bottom: 2px;
         }
 
         .r-card-body p {
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             color: #777;
             margin-bottom: 0;
         }
@@ -428,21 +419,21 @@
             color: var(--color-primary);
         }
 
-        /* PAGE 3 SPECIFIC STYLES (SCHEDULE & SYLLABUS) */
+        /* PAGE 3 */
         .schedule-grid-box {
             background: var(--color-sand);
             border: 1px solid var(--color-border);
             border-radius: 8px;
-            padding: 10px 14px;
-            margin-bottom: 12px;
+            padding: 8px 12px;
+            margin-bottom: 10px;
         }
 
         .sch-row {
             display: grid;
-            grid-template-columns: 140px 1fr;
-            padding: 4px 0;
+            grid-template-columns: 135px 1fr;
+            padding: 3.5px 0;
             border-bottom: 1px dashed #e2d6c6;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
         }
 
         .sch-row:last-child {
@@ -460,8 +451,8 @@
         }
 
         .module-item {
-            margin-bottom: 8px;
-            padding-bottom: 8px;
+            margin-bottom: 6px;
+            padding-bottom: 6px;
             border-bottom: 1px solid #f0e6d9;
         }
 
@@ -471,48 +462,48 @@
         }
 
         .module-item h4 {
-            font-size: 0.88rem;
+            font-size: 0.86rem;
             margin-bottom: 2px;
             color: var(--color-primary);
         }
 
         .module-item p {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             margin-bottom: 0;
-            line-height: 1.5;
+            line-height: 1.48;
             color: #555;
         }
 
-        /* PAGE 4 SPECIFIC STYLES (TRAVEL & PACKING) */
+        /* PAGE 4 */
         .travel-card {
             background: var(--color-sand);
             border: 1px solid var(--color-border);
             border-radius: 8px;
-            padding: 12px 16px;
-            margin-bottom: 12px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
         }
 
         .travel-card p {
-            margin-bottom: 6px;
-            font-size: 0.84rem;
+            margin-bottom: 5px;
+            font-size: 0.82rem;
         }
 
         .pack-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .pack-box {
             background: #fff;
             border: 1px solid var(--color-border);
             border-radius: 8px;
-            padding: 10px 14px;
+            padding: 10px 12px;
         }
 
         .pack-box h4 {
-            font-size: 0.86rem;
+            font-size: 0.84rem;
             color: var(--color-primary);
             margin-bottom: 4px;
             display: flex;
@@ -522,24 +513,24 @@
 
         .pack-box ul {
             padding-left: 14px;
-            font-size: 0.8rem;
-            line-height: 1.6;
+            font-size: 0.78rem;
+            line-height: 1.55;
             color: #555;
         }
 
-        /* PAGE 5 SPECIFIC STYLES (RULES, TERMS & HOSTS) */
+        /* PAGE 5 */
         .rules-card {
             background: var(--color-sand);
             border: 1px solid var(--color-border);
             border-radius: 8px;
-            padding: 12px 16px;
-            margin-bottom: 12px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
         }
 
         .rules-card ul {
             padding-left: 16px;
-            font-size: 0.82rem;
-            line-height: 1.65;
+            font-size: 0.8rem;
+            line-height: 1.6;
             color: #444;
         }
 
@@ -547,31 +538,31 @@
             background: var(--color-sand);
             border: 1px solid var(--color-border);
             border-radius: 8px;
-            padding: 12px 16px;
-            margin-bottom: 14px;
-            font-size: 0.82rem;
-            line-height: 1.6;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            font-size: 0.8rem;
+            line-height: 1.55;
             color: #555;
         }
 
         .p5-host-box {
             background: linear-gradient(135deg, #2e1d17 0%, #4a2d21 100%);
             color: #fff;
-            border-radius: 12px;
-            padding: 18px 20px;
+            border-radius: 10px;
+            padding: 16px 18px;
             text-align: center;
         }
 
         .p5-host-box h3 {
             color: #fff;
-            font-size: 1.3rem;
-            margin-bottom: 6px;
+            font-size: 1.25rem;
+            margin-bottom: 4px;
         }
 
         .p5-host-box p {
             color: rgba(255,255,255,0.85);
-            font-size: 0.84rem;
-            margin-bottom: 12px;
+            font-size: 0.82rem;
+            margin-bottom: 10px;
         }
 
         .host-btns-grid {
@@ -584,9 +575,9 @@
             background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.25);
             color: #fff;
-            padding: 8px 10px;
+            padding: 7px 8px;
             border-radius: 6px;
-            font-size: 0.78rem;
+            font-size: 0.76rem;
             font-weight: 700;
             text-decoration: none;
             display: flex;
@@ -595,19 +586,14 @@
             gap: 6px;
         }
 
-        .h-btn:hover {
-            background: var(--color-gold);
-            border-color: var(--color-gold);
-            color: #fff;
-        }
-
-        /* PRINT STYLES */
+        /* PRINT MEDIA QUERY (For Ctrl + P or browser print) */
         @media print {
-            .top-action-bar {
+            .top-action-bar, .floating-actions, #shiva-chatbot-root {
                 display: none !important;
             }
             body {
                 background: #ffffff !important;
+                margin: 0 !important;
                 padding: 0 !important;
             }
             .pdf-document-wrapper {
@@ -615,15 +601,20 @@
                 margin: 0 !important;
             }
             .a4-page {
+                width: 100% !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+                margin: 0 !important;
+                padding: 30px 40px 20px 40px !important;
                 box-shadow: none !important;
                 border-radius: 0 !important;
-                margin: 0 !important;
-                width: 100% !important;
-                height: 297mm !important;
-                min-height: 297mm !important;
                 page-break-after: always !important;
                 break-after: page !important;
-                padding: 14mm 16mm 12mm 16mm !important;
+                page-break-inside: avoid !important;
+            }
+            .a4-page:last-child {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
             }
             @page {
                 size: A4 portrait;
@@ -643,7 +634,7 @@
         </div>
         <div class="bar-actions">
             <button onclick="downloadBrochurePDF()" class="btn-action btn-pdf-download" id="downloadBtn">
-                <i class="fas fa-file-pdf"></i> Download Brochure PDF (5 Pages)
+                <i class="fas fa-file-pdf"></i> Download Clean 5-Page PDF
             </button>
             <a href="booking.html" class="btn-action btn-book-now">
                 <i class="fas fa-check-circle"></i> Reserve Online
@@ -681,7 +672,7 @@
                     Our curriculum synthesizes traditional <strong>Hatha Yoga</strong>, dynamic <strong>Ashtanga Vinyasa</strong>, and modern teaching methodologies, empowering you with the practical tools and global credentials (200 RYT) to teach with depth, authenticity, and confidence anywhere in the world.
                 </p>
 
-                <div class="section-h2" style="margin-top: 10px;"><i class="fas fa-star"></i> Core Highlights</div>
+                <div class="section-h2" style="margin-top: 6px;"><i class="fas fa-star"></i> Core Highlights</div>
                 <div class="highlights-strip">
                     <div class="hl-card"><i class="fas fa-check-circle"></i> Classical Hatha</div>
                     <div class="hl-card"><i class="fas fa-check-circle"></i> Ashtanga Vinyasa</div>
@@ -991,32 +982,59 @@
 
     </div>
 
-    <!-- Script for 1-Click Clean PDF Download -->
+    <!-- Script for Exact Page-by-Page 5-Page PDF Generation -->
     <script>
-        function downloadBrochurePDF() {
+        async function downloadBrochurePDF() {
             const btn = document.getElementById('downloadBtn');
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating 5-Page PDF...';
             btn.disabled = true;
 
-            const element = document.getElementById('brochureRoot');
-            const opt = {
-                margin: 0,
-                filename: 'Shiva-Yoga-Goa-200Hr-TTC-Brochure.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, logging: false },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+            try {
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4',
+                    compress: true
+                });
 
-            html2pdf().set(opt).from(element).save().then(() => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }).catch(err => {
-                console.error(err);
-                btn.innerHTML = originalText;
-                btn.disabled = false;
+                const pages = [
+                    document.getElementById('page-1'),
+                    document.getElementById('page-2'),
+                    document.getElementById('page-3'),
+                    document.getElementById('page-4'),
+                    document.getElementById('page-5')
+                ];
+
+                for (let i = 0; i < pages.length; i++) {
+                    const pageEl = pages[i];
+                    if (i > 0) {
+                        pdf.addPage('a4', 'portrait');
+                    }
+
+                    const canvas = await html2canvas(pageEl, {
+                        scale: 2,
+                        useCORS: true,
+                        logging: false,
+                        backgroundColor: '#ffffff',
+                        width: 794,
+                        height: 1123,
+                        windowWidth: 794
+                    });
+
+                    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                    pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
+                }
+
+                pdf.save('Shiva-Yoga-Goa-200Hr-TTC-Brochure.pdf');
+            } catch (err) {
+                console.error("PDF generation fallback:", err);
                 window.print();
-            });
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
         }
     </script>
 </body>
