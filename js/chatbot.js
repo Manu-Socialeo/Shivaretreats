@@ -1,70 +1,73 @@
 /**
- * Shiva Yoga AI Concierge & Ashram Assistant Client Widget
- * Connects to /api/chat (Serverless Gemini / OpenAI / Built-in Engine)
+ * Shiva Yoga "Ask Me" Chatbot Widget
+ * Compact, lightweight AI admissions assistant sitting in the bottom-right corner.
  */
 
 (function () {
     'use strict';
 
-    // Inject Chatbot HTML and CSS dynamically on any page
-    function initChatbot() {
+    function initAskMeBot() {
         if (document.getElementById('shiva-chatbot-root')) return;
 
-        // Create Container
+        // Path resolution for root vs subdirectories (/courses/, /blog/)
+        const isSubdir = window.location.pathname.includes('/courses/') || window.location.pathname.includes('/blog/');
+        const logoPath = isSubdir ? '../assets/images/logo-dark.png' : 'assets/images/logo-dark.png';
+        const bookingPath = isSubdir ? '../booking.html' : 'booking.html';
+
         const root = document.createElement('div');
         root.id = 'shiva-chatbot-root';
         root.innerHTML = `
-            <!-- Floating Trigger Button -->
-            <button id="shivaChatToggle" class="shiva-chat-toggle" aria-label="Open Shiva Yoga AI Assistant">
-                <span class="chat-toggle-icon"><i class="fas fa-comment-dots"></i></span>
-                <span class="chat-toggle-text">Ask Shiva AI</span>
-                <span class="chat-online-pulse"></span>
+            <!-- Small Floating "Ask Me" Launcher -->
+            <button id="shivaChatToggle" class="askme-toggle-btn" aria-label="Ask Me - Shiva Yoga Assistant">
+                <span class="askme-icon"><i class="fas fa-sparkles"></i></span>
+                <span class="askme-label">Ask Me</span>
+                <span class="askme-pulse"></span>
             </button>
 
-            <!-- Chat Modal Box -->
-            <div id="shivaChatModal" class="shiva-chat-modal">
-                <!-- Chat Header -->
-                <div class="shiva-chat-header">
-                    <div class="chat-header-info">
-                        <div class="chat-avatar">
-                            <img src="assets/images/logo-dark.png" alt="Shiva Yoga Logo" width="36" height="36">
-                            <span class="avatar-status-dot"></span>
+            <!-- Compact "Ask Me" Chat Window (Bottom-Right) -->
+            <div id="shivaChatModal" class="askme-chat-window">
+                <!-- Header -->
+                <div class="askme-header">
+                    <div class="askme-header-brand">
+                        <div class="askme-avatar">
+                            <img src="${logoPath}" alt="Shiva Yoga" width="30" height="30">
+                            <span class="askme-dot"></span>
                         </div>
                         <div>
-                            <h4 class="chat-header-title">Shiva Yoga Assistant</h4>
-                            <span class="chat-header-status">Online &bull; 24/7 Admissions AI</span>
+                            <div class="askme-title">Ask Shiva Yoga</div>
+                            <div class="askme-sub">Online &bull; Instant Answers</div>
                         </div>
                     </div>
-                    <div class="chat-header-actions">
-                        <button id="shivaChatReset" class="chat-action-btn" title="Clear Conversation"><i class="fas fa-redo-alt"></i></button>
-                        <button id="shivaChatClose" class="chat-action-btn" title="Close Chat"><i class="fas fa-times"></i></button>
+                    <div class="askme-header-btns">
+                        <button id="shivaChatReset" class="askme-icon-btn" title="Restart Chat"><i class="fas fa-redo-alt"></i></button>
+                        <button id="shivaChatClose" class="askme-icon-btn" title="Close"><i class="fas fa-times"></i></button>
                     </div>
                 </div>
 
-                <!-- Chat Body / Message List -->
-                <div id="shivaChatMessages" class="shiva-chat-messages">
-                    <div class="chat-msg bot-msg">
-                        <div class="msg-bubble">
-                            <strong>Namaste! 🙏 Welcome to Shiva Yoga Goa.</strong><br><br>
-                            I am your AI Ashram Concierge. I can answer questions about course dates, fees, dorm vs private rooms, 34 ashram rules, or help you book your seat.
+                <!-- Messages -->
+                <div id="shivaChatMessages" class="askme-messages">
+                    <div class="askme-msg bot">
+                        <div class="askme-bubble">
+                            <strong>Namaste! 🙏</strong><br>
+                            Ask me anything about our Yoga TTCs, Retreats, fees, dates, rules, or room options!
                         </div>
-                        <span class="msg-time">Just now</span>
+                        <span class="askme-time">Just now</span>
                     </div>
 
-                    <!-- Quick Suggestions -->
-                    <div class="chat-quick-chips" id="chatQuickChips">
-                        <button type="button" class="chip-btn" data-q="What are the 200-Hour TTC fees?">⭐ 200-Hr TTC Fees</button>
-                        <button type="button" class="chip-btn" data-q="When do upcoming TTC courses start?">📅 Upcoming Dates</button>
-                        <button type="button" class="chip-btn" data-q="What are the essential ashram rules and curfew?">📜 Ashram Rules</button>
-                        <button type="button" class="chip-btn" data-q="What should I pack for the course?">🧳 What to Pack</button>
-                        <button type="button" class="chip-btn" data-q="How do I book online and pay deposit?">💳 How to Book</button>
+                    <!-- Quick Prompt Pills -->
+                    <div class="askme-chips" id="askmeChips">
+                        <button type="button" class="askme-chip" data-q="What are the 200-Hour TTC fees?">⭐ 200-Hr TTC Fee</button>
+                        <button type="button" class="askme-chip" data-q="When is the next batch start date?">📅 Next Start Date</button>
+                        <button type="button" class="askme-chip" data-q="What are the 34 ashram rules & curfew?">📜 Ashram Rules</button>
+                        <button type="button" class="askme-chip" data-q="What should I pack for the course?">🧳 What to Pack</button>
+                        <button type="button" class="askme-chip" data-q="How do I book online and pay deposit?">💳 How to Book</button>
                     </div>
                 </div>
 
-                <!-- Chat Input Area -->
-                <form id="shivaChatForm" class="shiva-chat-input-area" onsubmit="return false;">
-                    <input type="text" id="shivaChatInput" class="shiva-chat-input" placeholder="Type your question in any language..." autocomplete="off" required>
-                    <button type="submit" id="shivaChatSend" class="shiva-chat-send-btn" aria-label="Send Message">
+                <!-- Input Field -->
+                <form id="shivaChatForm" class="askme-input-bar" onsubmit="return false;">
+                    <input type="text" id="shivaChatInput" class="askme-input" placeholder="Type your question..." autocomplete="off" required>
+                    <button type="submit" id="shivaChatSend" class="askme-send" aria-label="Send">
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </form>
@@ -73,7 +76,7 @@
 
         document.body.appendChild(root);
 
-        // State & Elements
+        // Elements
         const toggleBtn = document.getElementById('shivaChatToggle');
         const modal = document.getElementById('shivaChatModal');
         const closeBtn = document.getElementById('shivaChatClose');
@@ -81,160 +84,147 @@
         const chatForm = document.getElementById('shivaChatForm');
         const chatInput = document.getElementById('shivaChatInput');
         const messagesContainer = document.getElementById('shivaChatMessages');
-        const quickChips = document.getElementById('chatQuickChips');
+        const quickChips = document.getElementById('askmeChips');
 
         let chatHistory = [];
         let isSending = false;
 
-        // Toggle Open/Close
-        function toggleModal(open) {
+        function toggleChat(open) {
             const shouldOpen = open !== undefined ? open : !modal.classList.contains('active');
             modal.classList.toggle('active', shouldOpen);
-            toggleBtn.classList.toggle('chat-open', shouldOpen);
+            toggleBtn.classList.toggle('open', shouldOpen);
             if (shouldOpen) {
-                setTimeout(() => chatInput.focus(), 200);
+                setTimeout(() => chatInput.focus(), 150);
             }
         }
 
-        toggleBtn.addEventListener('click', () => toggleModal());
-        closeBtn.addEventListener('click', () => toggleModal(false));
+        toggleBtn.addEventListener('click', () => toggleChat());
+        closeBtn.addEventListener('click', () => toggleChat(false));
 
-        // Quick Chip Buttons
+        // Quick chip clicks
         if (quickChips) {
             quickChips.addEventListener('click', (e) => {
-                const btn = e.target.closest('.chip-btn');
-                if (btn && btn.dataset.q) {
-                    sendMessage(btn.dataset.q);
+                const chip = e.target.closest('.askme-chip');
+                if (chip && chip.dataset.q) {
+                    sendQuery(chip.dataset.q);
                 }
             });
         }
 
-        // Reset conversation
+        // Reset chat
         resetBtn.addEventListener('click', () => {
             chatHistory = [];
             messagesContainer.innerHTML = `
-                <div class="chat-msg bot-msg">
-                    <div class="msg-bubble">
-                        <strong>Namaste! 🙏</strong> How can I help you today with Shiva Yoga programs or ashram stay?
+                <div class="askme-msg bot">
+                    <div class="askme-bubble">
+                        <strong>Namaste! 🙏</strong><br>
+                        Ask me anything about our Yoga TTCs, Retreats, fees, dates, rules, or room options!
                     </div>
-                    <span class="msg-time">Just now</span>
+                    <span class="askme-time">Just now</span>
                 </div>
-                <div class="chat-quick-chips" id="chatQuickChips">
-                    <button type="button" class="chip-btn" data-q="What are the 200-Hour TTC fees?">⭐ 200-Hr TTC Fees</button>
-                    <button type="button" class="chip-btn" data-q="When do upcoming TTC courses start?">📅 Upcoming Dates</button>
-                    <button type="button" class="chip-btn" data-q="What are the essential ashram rules and curfew?">📜 Ashram Rules</button>
-                    <button type="button" class="chip-btn" data-q="What should I pack for the course?">🧳 What to Pack</button>
+                <div class="askme-chips" id="askmeChips">
+                    <button type="button" class="askme-chip" data-q="What are the 200-Hour TTC fees?">⭐ 200-Hr TTC Fee</button>
+                    <button type="button" class="askme-chip" data-q="When is the next batch start date?">📅 Next Start Date</button>
+                    <button type="button" class="askme-chip" data-q="What are the 34 ashram rules & curfew?">📜 Ashram Rules</button>
+                    <button type="button" class="askme-chip" data-q="What should I pack for the course?">🧳 What to Pack</button>
                 </div>
             `;
-            // re-bind quick chips
-            const newChips = document.getElementById('chatQuickChips');
+            const newChips = document.getElementById('askmeChips');
             if (newChips) {
                 newChips.addEventListener('click', (e) => {
-                    const btn = e.target.closest('.chip-btn');
-                    if (btn && btn.dataset.q) sendMessage(btn.dataset.q);
+                    const chip = e.target.closest('.askme-chip');
+                    if (chip && chip.dataset.q) sendQuery(chip.dataset.q);
                 });
             }
         });
 
-        // Form Submit
+        // Form submit
         chatForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const text = chatInput.value.trim();
             if (text && !isSending) {
-                sendMessage(text);
+                sendQuery(text);
                 chatInput.value = '';
             }
         });
 
-        // Send Message Function
-        async function sendMessage(userText) {
+        // Send query to serverless /api/chat
+        async function sendQuery(queryText) {
             if (isSending) return;
             isSending = true;
 
-            // Hide quick chips once chatting begins
-            const chips = document.getElementById('chatQuickChips');
+            const chips = document.getElementById('askmeChips');
             if (chips) chips.remove();
 
-            // Append User Message Bubble
-            appendMessage('user', userText);
+            appendMsg('user', queryText);
 
-            // Append Typing Indicator
-            const typingIndicator = document.createElement('div');
-            typingIndicator.className = 'chat-msg bot-msg typing-msg';
-            typingIndicator.innerHTML = `
-                <div class="msg-bubble typing-dots">
+            // Typing animation
+            const typing = document.createElement('div');
+            typing.className = 'askme-msg bot typing';
+            typing.innerHTML = `
+                <div class="askme-bubble typing-dots">
                     <span></span><span></span><span></span>
                 </div>
             `;
-            messagesContainer.appendChild(typingIndicator);
-            scrollToBottom();
+            messagesContainer.appendChild(typing);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-            // Record history
-            chatHistory.push({ role: 'user', content: userText });
+            chatHistory.push({ role: 'user', content: queryText });
 
             try {
-                // Call /api/chat serverless route
                 const res = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: userText, history: chatHistory })
+                    body: JSON.stringify({ message: queryText, history: chatHistory })
                 });
 
-                let replyText = "";
+                let reply = "";
                 if (res.ok) {
                     const data = await res.json();
-                    replyText = data.reply || "Namaste! Please connect with our admissions team on WhatsApp at +91 74119 24193.";
+                    reply = data.reply || "Namaste! Please chat with our team on WhatsApp at +91 74119 24193.";
                 } else {
-                    replyText = "Namaste! 🙏 You can book directly at [shivaretreats.vercel.app/booking.html](booking.html) or chat with our team on [WhatsApp](https://wa.me/917411924193).";
+                    reply = "Namaste! 🙏 You can book directly at [Online Booking](booking.html) or chat on [WhatsApp](https://wa.me/917411924193).";
                 }
 
-                typingIndicator.remove();
-                appendMessage('bot', replyText);
-                chatHistory.push({ role: 'assistant', content: replyText });
+                typing.remove();
+                appendMsg('bot', reply);
+                chatHistory.push({ role: 'assistant', content: reply });
 
             } catch (err) {
-                console.error("Chat error:", err);
-                typingIndicator.remove();
-                appendMessage('bot', "Namaste! 🙏 You can book online directly at [shivaretreats.vercel.app/booking.html](booking.html) or message our admissions director on [WhatsApp at +91 74119 24193](https://wa.me/917411924193).");
+                typing.remove();
+                appendMsg('bot', "Namaste! 🙏 Book directly at [Online Booking](booking.html) or contact admissions on [WhatsApp: +91 74119 24193](https://wa.me/917411924193).");
             } finally {
                 isSending = false;
-                scrollToBottom();
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }
         }
 
-        // Render message with basic markdown support
-        function appendMessage(role, text) {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `chat-msg ${role === 'user' ? 'user-msg' : 'bot-msg'}`;
+        function appendMsg(role, text) {
+            const div = document.createElement('div');
+            div.className = `askme-msg ${role}`;
 
-            // Parse Markdown: bold, links, list items, emojis
             let formatted = text
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" class="chat-link">$1 &rarr;</a>')
+                .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" class="askme-link">$1 &rarr;</a>')
                 .replace(/\n/g, '<br>');
 
             const now = new Date();
-            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-            msgDiv.innerHTML = `
-                <div class="msg-bubble">${formatted}</div>
-                <span class="msg-time">${timeStr}</span>
+            div.innerHTML = `
+                <div class="askme-bubble">${formatted}</div>
+                <span class="askme-time">${time}</span>
             `;
 
-            messagesContainer.appendChild(msgDiv);
-            scrollToBottom();
-        }
-
-        function scrollToBottom() {
+            messagesContainer.appendChild(div);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
     }
 
-    // Initialize on DOM load
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initChatbot);
+        document.addEventListener('DOMContentLoaded', initAskMeBot);
     } else {
-        initChatbot();
+        initAskMeBot();
     }
 })();
