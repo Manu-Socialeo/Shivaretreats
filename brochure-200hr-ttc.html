@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" href="assets/images/logo-dark.png" type="image/png">
 
-    <!-- Direct html2canvas + jsPDF engine for 100% Guaranteed Exact 3 Pages -->
+    <!-- html2canvas and jsPDF for exact 3-page PDF generation with dynamic link mapping -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -577,15 +577,15 @@
             background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.25);
             color: #fff;
-            padding: 6px 6px;
+            padding: 7px 6px;
             border-radius: 4px;
-            font-size: 0.72rem;
+            font-size: 0.74rem;
             font-weight: 700;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 5px;
         }
     </style>
 </head>
@@ -902,7 +902,7 @@
 
     </div>
 
-    <!-- Script for Direct Page-by-Page Stitching with Clickable Link Hotspots -->
+    <!-- Direct Dynamic Bounding-Box Link Mapping for 100% Accurate Link Redirection -->
     <script>
         async function downloadBrochurePDF() {
             const btn = document.getElementById('downloadBtn');
@@ -912,7 +912,7 @@
 
             try {
                 const { jsPDF } = window.jspdf;
-                // PDF dimension in points: 595.28 x 841.89 (Standard A4)
+                // Standard A4 in points: width 595.28 pt, height 841.89 pt
                 const pdf = new jsPDF({
                     orientation: 'portrait',
                     unit: 'pt',
@@ -932,6 +932,7 @@
                         pdf.addPage('a4', 'portrait');
                     }
 
+                    // Render Canvas for this specific A4 sheet
                     const canvas = await html2canvas(pageEl, {
                         scale: 2,
                         useCORS: true,
@@ -945,26 +946,25 @@
                     const imgData = canvas.toDataURL('image/jpeg', 0.96);
                     pdf.addImage(imgData, 'JPEG', 0, 0, 595.28, 841.89, undefined, 'FAST');
 
-                    // Add Interactive Clickable Link Hotspots
-                    if (i === 0) {
-                        // Page 1 Footer links
-                        pdf.link(200, 820, 200, 20, { url: 'https://shivaretreats.vercel.app' });
-                        pdf.link(420, 820, 150, 20, { url: 'https://wa.me/917411924193' });
-                    } else if (i === 1) {
-                        // Page 2 Batch links & footer
-                        pdf.link(200, 820, 200, 20, { url: 'https://shivaretreats.vercel.app' });
-                        pdf.link(420, 820, 150, 20, { url: 'https://wa.me/917411924193' });
-                    } else if (i === 2) {
-                        // Page 3 Host Contact Buttons: WhatsApp, Instagram, Location, Book Now
-                        // Host box is positioned near y: 730-800 pt
-                        pdf.link(35, 760, 125, 30, { url: 'https://wa.me/917411924193?text=Namaste!%20I%20am%20interested%20in%20200-Hour%20Yoga%20TTC%20in%20Goa' });
-                        pdf.link(170, 760, 125, 30, { url: 'https://www.instagram.com/shivayoga.goa' });
-                        pdf.link(305, 760, 125, 30, { url: 'https://maps.google.com/?q=Shiva+Yoga+Arambol+Goa' });
-                        pdf.link(440, 760, 125, 30, { url: 'https://shivaretreats.vercel.app/booking.html' });
-                        
-                        pdf.link(200, 820, 200, 20, { url: 'https://shivaretreats.vercel.app' });
-                        pdf.link(420, 820, 150, 20, { url: 'https://wa.me/917411924193' });
-                    }
+                    // DYNAMICALLY MAP EVERY <a> LINK TO ITS EXACT BOUNDING BOX IN PDF
+                    const pageRect = pageEl.getBoundingClientRect();
+                    const links = pageEl.querySelectorAll('a');
+                    const scaleX = 595.28 / pageRect.width;
+                    const scaleY = 841.89 / pageRect.height;
+
+                    links.forEach(link => {
+                        const href = link.href;
+                        if (href && href !== '#' && !href.startsWith('javascript:')) {
+                            const linkRect = link.getBoundingClientRect();
+                            const x = (linkRect.left - pageRect.left) * scaleX;
+                            const y = (linkRect.top - pageRect.top) * scaleY;
+                            const w = linkRect.width * scaleX;
+                            const h = linkRect.height * scaleY;
+
+                            // Add Clickable Hyperlink Overlay in PDF
+                            pdf.link(x, y, w, h, { url: href });
+                        }
+                    });
                 }
 
                 pdf.save('Shiva-Yoga-Goa-200Hr-TTC-Brochure.pdf');
