@@ -98,8 +98,24 @@
             }
         }
 
-        toggleBtn.addEventListener('click', () => toggleChat());
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleChat();
+        });
         closeBtn.addEventListener('click', () => toggleChat(false));
+
+        // Close on Click Outside or ESC key
+        document.addEventListener('click', (e) => {
+            if (modal.classList.contains('active') && !modal.contains(e.target) && !toggleBtn.contains(e.target)) {
+                toggleChat(false);
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                toggleChat(false);
+            }
+        });
 
         // Quick chip clicks
         if (quickChips) {

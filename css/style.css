@@ -2159,13 +2159,19 @@ body.menu-open .mobile-nav-backdrop {
         bottom: 78px;
         right: 14px;
         padding: 8px 14px;
-        font-size: 0.78rem;
+        font-size: 0.8rem;
     }
     .askme-chat-window {
-        right: 10px;
-        bottom: 70px;
-        width: calc(100vw - 20px);
-        height: calc(100vh - 90px);
+        right: 8px;
+        left: 8px;
+        bottom: 68px;
+        width: calc(100vw - 16px);
+        height: 75vh;
+        max-height: 520px;
+        border-radius: 16px;
+    }
+    .askme-input {
+        font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
     }
 }
 
