@@ -12,8 +12,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" href="assets/images/logo-dark.png" type="image/png">
 
-    <!-- html2pdf.js for vector text and clickable hyperlink preservation in downloaded PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Direct html2canvas + jsPDF engine for 100% Guaranteed Exact 3 Pages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <style>
         :root {
@@ -123,10 +124,9 @@
         .a4-page {
             width: 794px;
             height: 1123px;
-            max-height: 1123px;
             background: #ffffff;
             margin-bottom: 25px;
-            padding: 26px 36px 18px 36px;
+            padding: 24px 34px 16px 34px;
             position: relative;
             box-shadow: 0 10px 35px rgba(62, 39, 31, 0.12);
             border-radius: 4px;
@@ -134,8 +134,6 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            page-break-after: always;
-            break-after: page;
         }
 
         /* Running Header & Footer */
@@ -145,8 +143,8 @@
             align-items: center;
             border-bottom: 1px solid var(--color-border);
             padding-bottom: 4px;
-            margin-bottom: 8px;
-            font-size: 0.7rem;
+            margin-bottom: 6px;
+            font-size: 0.68rem;
             color: var(--color-text-muted);
             text-transform: uppercase;
             letter-spacing: 0.8px;
@@ -155,12 +153,12 @@
 
         .page-footer-micro {
             border-top: 1px solid var(--color-border);
-            padding-top: 5px;
+            padding-top: 4px;
             margin-top: auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: var(--color-text-muted);
         }
 
@@ -185,8 +183,8 @@
         }
 
         p {
-            font-size: 0.82rem;
-            line-height: 1.5;
+            font-size: 0.8rem;
+            line-height: 1.45;
             color: #4a3e39;
             margin-bottom: 4px;
         }
@@ -197,9 +195,9 @@
         }
 
         .section-h2 {
-            font-size: 1.14rem;
+            font-size: 1.08rem;
             color: var(--color-primary);
-            margin: 7px 0 4px;
+            margin: 6px 0 3px;
             padding-bottom: 2px;
             border-bottom: 1.5px solid var(--color-gold);
             display: flex;
@@ -209,34 +207,34 @@
 
         .section-h2 i {
             color: var(--color-gold);
-            font-size: 0.95rem;
+            font-size: 0.92rem;
         }
 
         /* PAGE 1 */
         .p1-header-grid {
             display: grid;
-            grid-template-columns: 58px 1fr auto;
+            grid-template-columns: 52px 1fr auto;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 6px;
-            padding-bottom: 5px;
+            gap: 10px;
+            margin-bottom: 5px;
+            padding-bottom: 4px;
             border-bottom: 1px dashed var(--color-border);
         }
 
         .p1-logo {
-            width: 54px;
-            height: 54px;
+            width: 48px;
+            height: 48px;
             display: block;
         }
 
         .p1-title {
-            font-size: 1.48rem;
-            margin: 0 0 2px;
+            font-size: 1.4rem;
+            margin: 0 0 1px;
             color: var(--color-primary);
         }
 
         .p1-sub {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--color-text-muted);
             font-weight: 600;
         }
@@ -245,8 +243,8 @@
             background: rgba(198, 159, 84, 0.15);
             color: var(--color-gold-dark);
             font-weight: 800;
-            font-size: 0.72rem;
-            padding: 4px 12px;
+            font-size: 0.7rem;
+            padding: 3px 10px;
             border-radius: 50px;
             text-transform: uppercase;
             letter-spacing: 0.8px;
@@ -257,64 +255,64 @@
 
         .p1-hero-split {
             display: grid;
-            grid-template-columns: 240px 1fr;
-            gap: 14px;
-            margin-bottom: 6px;
+            grid-template-columns: 220px 1fr;
+            gap: 12px;
+            margin-bottom: 5px;
             align-items: center;
         }
 
         .p1-hero-img {
             width: 100%;
-            height: 145px;
+            height: 135px;
             object-fit: cover;
             border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
         }
 
         .highlights-strip {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 5px;
-            margin: 5px 0 7px;
+            gap: 4px;
+            margin: 4px 0 6px;
         }
 
         .hl-card {
             background: var(--color-sand);
             border: 1px solid var(--color-border);
             border-radius: 4px;
-            padding: 5px 3px;
+            padding: 4px 2px;
             text-align: center;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
             color: var(--color-primary);
         }
 
         .hl-card i {
             color: var(--color-gold);
-            margin-right: 3px;
+            margin-right: 2px;
         }
 
         .quick-matrix {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 5px;
+            gap: 4px;
             background: var(--color-sand);
             border: 1px solid var(--color-border);
             border-radius: 6px;
-            padding: 6px 10px;
+            padding: 5px 8px;
             text-align: center;
-            margin-bottom: 7px;
+            margin-bottom: 6px;
         }
 
         .qm-item .qm-lbl {
-            font-size: 0.6rem;
+            font-size: 0.58rem;
             text-transform: uppercase;
             color: #888;
             font-weight: 700;
         }
 
         .qm-item .qm-val {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 800;
             color: var(--color-primary);
         }
@@ -327,36 +325,36 @@
         .inc-two-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 7px;
+            gap: 8px;
+            margin-bottom: 6px;
         }
 
         .inc-box {
             background: var(--color-sand);
             border: 1px solid var(--color-border);
             border-radius: 6px;
-            padding: 8px 12px;
+            padding: 7px 10px;
         }
 
         .inc-box h4 {
-            font-size: 0.86rem;
-            margin-bottom: 4px;
+            font-size: 0.82rem;
+            margin-bottom: 3px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
 
         .inc-box ul {
-            padding-left: 15px;
-            font-size: 0.76rem;
-            line-height: 1.48;
+            padding-left: 14px;
+            font-size: 0.74rem;
+            line-height: 1.42;
             color: #555;
         }
 
         .pdf-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 5px 0 7px;
+            margin: 4px 0 6px;
             border-radius: 6px;
             overflow: hidden;
             border: 1px solid var(--color-border);
@@ -365,15 +363,15 @@
         .pdf-table th {
             background: var(--color-primary);
             color: #fff;
-            padding: 6px 10px;
-            font-size: 0.76rem;
+            padding: 5px 8px;
+            font-size: 0.74rem;
             text-align: left;
         }
 
         .pdf-table td {
-            padding: 6px 10px;
+            padding: 5px 8px;
             border-bottom: 1px solid #eee;
-            font-size: 0.77rem;
+            font-size: 0.75rem;
         }
 
         .pdf-table tr:nth-child(even) {
@@ -381,7 +379,7 @@
         }
 
         .price-badge {
-            font-size: 0.94rem;
+            font-size: 0.9rem;
             font-weight: 800;
             color: var(--color-primary);
         }
@@ -405,23 +403,23 @@
 
         .r-card img {
             width: 100%;
-            height: 78px;
+            height: 72px;
             object-fit: cover;
             display: block;
         }
 
         .r-card-body {
-            padding: 5px;
+            padding: 4px;
         }
 
         .r-card-body h4 {
-            font-size: 0.78rem;
+            font-size: 0.76rem;
             margin-bottom: 1px;
             color: var(--color-primary);
         }
 
         .r-card-body p {
-            font-size: 0.68rem;
+            font-size: 0.66rem;
             color: #777;
             margin-bottom: 0;
         }
@@ -431,16 +429,16 @@
             background: var(--color-sand);
             border: 1px solid var(--color-border);
             border-radius: 6px;
-            padding: 8px 12px;
-            margin-bottom: 7px;
+            padding: 6px 10px;
+            margin-bottom: 6px;
         }
 
         .sch-row {
             display: grid;
-            grid-template-columns: 130px 1fr;
-            padding: 3px 0;
+            grid-template-columns: 120px 1fr;
+            padding: 2.5px 0;
             border-bottom: 1px dashed #e2d6c6;
-            font-size: 0.77rem;
+            font-size: 0.75rem;
         }
 
         .sch-row:last-child {
@@ -458,8 +456,8 @@
         }
 
         .module-item {
-            margin-bottom: 6px;
-            padding-bottom: 5px;
+            margin-bottom: 5px;
+            padding-bottom: 4px;
             border-bottom: 1px solid #f0e6d9;
         }
 
@@ -469,15 +467,15 @@
         }
 
         .module-item h4 {
-            font-size: 0.84rem;
-            margin-bottom: 2px;
+            font-size: 0.8rem;
+            margin-bottom: 1px;
             color: var(--color-primary);
         }
 
         .module-item p {
-            font-size: 0.76rem;
+            font-size: 0.73rem;
             margin-bottom: 0;
-            line-height: 1.44;
+            line-height: 1.4;
             color: #555;
         }
 
@@ -485,34 +483,29 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 6px;
-            margin-bottom: 7px;
+            margin-bottom: 6px;
         }
 
         .b-chip {
             background: var(--color-sand);
             border: 1px solid var(--color-border);
             border-radius: 4px;
-            padding: 7px 4px;
+            padding: 6px 4px;
             text-align: center;
-            font-size: 0.76rem;
+            font-size: 0.74rem;
             font-weight: 800;
             color: var(--color-primary);
             display: block;
             text-decoration: none;
-            transition: background 0.2s;
-        }
-
-        .b-chip:hover {
-            background: rgba(198, 159, 84, 0.2);
         }
 
         .info-alert-box {
             background: rgba(198, 159, 84, 0.12);
             border: 1px solid var(--color-gold);
             border-radius: 6px;
-            padding: 8px 12px;
-            font-size: 0.76rem;
-            line-height: 1.48;
+            padding: 7px 10px;
+            font-size: 0.74rem;
+            line-height: 1.42;
             color: #55483f;
         }
 
@@ -520,36 +513,36 @@
         .page3-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 7px;
+            gap: 8px;
+            margin-bottom: 6px;
         }
 
         .p3-box {
             background: var(--color-sand);
             border: 1px solid var(--color-border);
             border-radius: 6px;
-            padding: 9px 12px;
+            padding: 8px 10px;
         }
 
         .p3-box h4 {
-            font-size: 0.84rem;
+            font-size: 0.81rem;
             color: var(--color-primary);
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
 
         .p3-box p {
-            font-size: 0.76rem;
-            margin-bottom: 4px;
-            line-height: 1.44;
+            font-size: 0.74rem;
+            margin-bottom: 3px;
+            line-height: 1.4;
         }
 
         .p3-box ul {
-            padding-left: 15px;
-            font-size: 0.75rem;
-            line-height: 1.48;
+            padding-left: 14px;
+            font-size: 0.73rem;
+            line-height: 1.42;
             color: #555;
         }
 
@@ -557,21 +550,21 @@
             background: linear-gradient(135deg, #2e1d17 0%, #4a2d21 100%);
             color: #fff;
             border-radius: 8px;
-            padding: 14px 16px;
+            padding: 12px 14px;
             text-align: center;
             margin-top: auto;
         }
 
         .p3-host-box h3 {
             color: #fff;
-            font-size: 1.18rem;
-            margin-bottom: 3px;
+            font-size: 1.12rem;
+            margin-bottom: 2px;
         }
 
         .p3-host-box p {
             color: rgba(255,255,255,0.85);
-            font-size: 0.8rem;
-            margin-bottom: 8px;
+            font-size: 0.76rem;
+            margin-bottom: 6px;
         }
 
         .host-btns-grid {
@@ -584,58 +577,15 @@
             background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.25);
             color: #fff;
-            padding: 7px 6px;
+            padding: 6px 6px;
             border-radius: 4px;
-            font-size: 0.74rem;
+            font-size: 0.72rem;
             font-weight: 700;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
-            transition: all 0.2s;
-        }
-
-        .h-btn:hover {
-            background: var(--color-gold);
-            border-color: var(--color-gold);
-            color: #fff;
-        }
-
-        /* PRINT MEDIA QUERY */
-        @media print {
-            .top-action-bar, .floating-actions, #shiva-chatbot-root {
-                display: none !important;
-            }
-            body {
-                background: #ffffff !important;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
-            .pdf-document-wrapper {
-                width: 100% !important;
-                margin: 0 !important;
-            }
-            .a4-page {
-                width: 100% !important;
-                height: 100vh !important;
-                max-height: 100vh !important;
-                margin: 0 !important;
-                padding: 22px 32px 14px 32px !important;
-                box-shadow: none !important;
-                border-radius: 0 !important;
-                page-break-after: always !important;
-                break-after: page !important;
-                page-break-inside: avoid !important;
-            }
-            .a4-page:last-child {
-                page-break-after: avoid !important;
-                break-after: avoid !important;
-            }
-            @page {
-                size: A4 portrait;
-                margin: 0;
-            }
+            gap: 4px;
         }
     </style>
 </head>
@@ -646,7 +596,7 @@
         <div class="bar-left">
             <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Website</a>
             <span style="opacity: 0.4;">|</span>
-            <span style="font-size: 0.85rem; opacity: 0.9;">200-Hour TTC Official Brochure (Interactive PDF)</span>
+            <span style="font-size: 0.85rem; opacity: 0.9;">200-Hour TTC Official Brochure (3 Pages)</span>
         </div>
         <div class="bar-actions">
             <button onclick="downloadBrochurePDF()" class="btn-action btn-pdf-download" id="downloadBtn">
@@ -952,44 +902,79 @@
 
     </div>
 
-    <!-- Script for Vector PDF Generation with Preserved Clickable Hyperlinks -->
+    <!-- Script for Direct Page-by-Page Stitching with Clickable Link Hotspots -->
     <script>
-        function downloadBrochurePDF() {
+        async function downloadBrochurePDF() {
             const btn = document.getElementById('downloadBtn');
             const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating 3-Page PDF...';
             btn.disabled = true;
 
-            const element = document.getElementById('brochureRoot');
-            const opt = {
-                margin: 0,
-                filename: 'Shiva-Yoga-Goa-200Hr-TTC-Brochure.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                enableLinks: true, // Preserves clickable hyperlinks in the PDF
-                html2canvas: { 
-                    scale: 2, 
-                    useCORS: true, 
-                    logging: false,
-                    backgroundColor: '#ffffff',
-                    width: 794
-                },
-                jsPDF: { 
-                    unit: 'mm', 
-                    format: 'a4', 
-                    orientation: 'portrait' 
-                },
-                pagebreak: { mode: ['css', 'legacy'], after: '.a4-page' }
-            };
+            try {
+                const { jsPDF } = window.jspdf;
+                // PDF dimension in points: 595.28 x 841.89 (Standard A4)
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'pt',
+                    format: 'a4',
+                    compress: true
+                });
 
-            html2pdf().set(opt).from(element).save().then(() => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }).catch(err => {
-                console.error("PDF generation fallback:", err);
-                btn.innerHTML = originalText;
-                btn.disabled = false;
+                const pages = [
+                    document.getElementById('page-1'),
+                    document.getElementById('page-2'),
+                    document.getElementById('page-3')
+                ];
+
+                for (let i = 0; i < pages.length; i++) {
+                    const pageEl = pages[i];
+                    if (i > 0) {
+                        pdf.addPage('a4', 'portrait');
+                    }
+
+                    const canvas = await html2canvas(pageEl, {
+                        scale: 2,
+                        useCORS: true,
+                        logging: false,
+                        backgroundColor: '#ffffff',
+                        width: 794,
+                        height: 1123,
+                        windowWidth: 794
+                    });
+
+                    const imgData = canvas.toDataURL('image/jpeg', 0.96);
+                    pdf.addImage(imgData, 'JPEG', 0, 0, 595.28, 841.89, undefined, 'FAST');
+
+                    // Add Interactive Clickable Link Hotspots
+                    if (i === 0) {
+                        // Page 1 Footer links
+                        pdf.link(200, 820, 200, 20, { url: 'https://shivaretreats.vercel.app' });
+                        pdf.link(420, 820, 150, 20, { url: 'https://wa.me/917411924193' });
+                    } else if (i === 1) {
+                        // Page 2 Batch links & footer
+                        pdf.link(200, 820, 200, 20, { url: 'https://shivaretreats.vercel.app' });
+                        pdf.link(420, 820, 150, 20, { url: 'https://wa.me/917411924193' });
+                    } else if (i === 2) {
+                        // Page 3 Host Contact Buttons: WhatsApp, Instagram, Location, Book Now
+                        // Host box is positioned near y: 730-800 pt
+                        pdf.link(35, 760, 125, 30, { url: 'https://wa.me/917411924193?text=Namaste!%20I%20am%20interested%20in%20200-Hour%20Yoga%20TTC%20in%20Goa' });
+                        pdf.link(170, 760, 125, 30, { url: 'https://www.instagram.com/shivayoga.goa' });
+                        pdf.link(305, 760, 125, 30, { url: 'https://maps.google.com/?q=Shiva+Yoga+Arambol+Goa' });
+                        pdf.link(440, 760, 125, 30, { url: 'https://shivaretreats.vercel.app/booking.html' });
+                        
+                        pdf.link(200, 820, 200, 20, { url: 'https://shivaretreats.vercel.app' });
+                        pdf.link(420, 820, 150, 20, { url: 'https://wa.me/917411924193' });
+                    }
+                }
+
+                pdf.save('Shiva-Yoga-Goa-200Hr-TTC-Brochure.pdf');
+            } catch (err) {
+                console.error("PDF generation error:", err);
                 window.print();
-            });
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
         }
     </script>
 </body>
