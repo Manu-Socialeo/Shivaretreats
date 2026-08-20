@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>200-Hour Yoga Teacher Training Brochure | Shiva Yoga Goa</title>
-    <meta name="description" content="Official 4-Page Syllabus, Schedule, Pricing, Inclusions, and Travel Guide for 200-Hour Yoga Teacher Training Course in Arambol, Goa certified by Yoga Alliance USA.">
+    <meta name="description" content="Official 3-Page Syllabus, Schedule, Pricing, Inclusions, and Travel Guide for 200-Hour Yoga Teacher Training Course in Arambol, Goa certified by Yoga Alliance USA.">
     <link rel="canonical" href="https://shivaretreats.vercel.app/brochure-200hr-ttc.html">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" href="assets/images/logo-dark.png" type="image/png">
 
-    <!-- html2canvas and jsPDF for exact 4-page PDF generation -->
+    <!-- html2canvas and jsPDF for exact 3-page PDF generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -127,7 +127,7 @@
             max-height: 1123px;
             background: #ffffff;
             margin-bottom: 25px;
-            padding: 35px 45px 25px 45px;
+            padding: 28px 40px 20px 40px;
             position: relative;
             box-shadow: 0 10px 35px rgba(62, 39, 31, 0.12);
             border-radius: 4px;
@@ -143,9 +143,9 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--color-border);
-            padding-bottom: 5px;
-            margin-bottom: 10px;
-            font-size: 0.72rem;
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+            font-size: 0.7rem;
             color: var(--color-text-muted);
             text-transform: uppercase;
             letter-spacing: 0.8px;
@@ -154,12 +154,12 @@
 
         .page-footer-micro {
             border-top: 1px solid var(--color-border);
-            padding-top: 6px;
+            padding-top: 5px;
             margin-top: auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             color: var(--color-text-muted);
         }
 
@@ -179,125 +179,133 @@
         h1, h2, h3, h4 {
             font-family: 'Marcellus', serif;
             color: var(--color-primary);
-            line-height: 1.25;
+            line-height: 1.2;
         }
 
         p {
-            font-size: 0.84rem;
-            line-height: 1.55;
+            font-size: 0.8rem;
+            line-height: 1.45;
             color: #4a3e39;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .section-h2 {
-            font-size: 1.2rem;
+            font-size: 1.08rem;
             color: var(--color-primary);
-            margin: 10px 0 6px;
-            padding-bottom: 3px;
-            border-bottom: 2px solid var(--color-gold);
+            margin: 7px 0 4px;
+            padding-bottom: 2px;
+            border-bottom: 1.5px solid var(--color-gold);
             display: flex;
             align-items: center;
-            gap: 7px;
+            gap: 6px;
         }
 
         .section-h2 i {
             color: var(--color-gold);
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
-        /* PAGE 1 (OVERVIEW & INCLUSIONS) */
-        .p1-brand-center {
-            text-align: center;
-            margin-bottom: 8px;
+        /* PAGE 1 (OVERVIEW, INCLUSIONS, FEES & ROOMS) */
+        .p1-header-grid {
+            display: grid;
+            grid-template-columns: 55px 1fr auto;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 6px;
+            padding-bottom: 4px;
+            border-bottom: 1px dashed var(--color-border);
         }
 
         .p1-logo {
-            width: 58px;
-            height: 58px;
-            margin: 0 auto 4px;
+            width: 52px;
+            height: 52px;
             display: block;
         }
 
-        .p1-badge {
-            display: inline-block;
-            background: rgba(198, 159, 84, 0.15);
-            color: var(--color-gold-dark);
-            font-weight: 800;
-            font-size: 0.74rem;
-            padding: 3px 12px;
-            border-radius: 50px;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 3px;
-            border: 1px solid var(--color-gold);
-        }
-
         .p1-title {
-            font-size: 1.75rem;
-            margin: 2px 0;
+            font-size: 1.4rem;
+            margin: 0 0 2px;
             color: var(--color-primary);
         }
 
         .p1-sub {
-            font-size: 0.84rem;
+            font-size: 0.78rem;
             color: var(--color-text-muted);
             font-weight: 600;
         }
 
+        .p1-badge {
+            background: rgba(198, 159, 84, 0.15);
+            color: var(--color-gold-dark);
+            font-weight: 800;
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            border: 1px solid var(--color-gold);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .p1-hero-split {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 12px;
+            margin-bottom: 6px;
+        }
+
         .p1-hero-img {
             width: 100%;
-            height: 165px;
+            height: 125px;
             object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+            border-radius: 6px;
         }
 
         .highlights-strip {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-            margin: 6px 0 8px;
+            gap: 4px;
+            margin: 4px 0 6px;
         }
 
         .hl-card {
             background: var(--color-sand);
             border: 1px solid var(--color-border);
-            border-radius: 6px;
-            padding: 6px 4px;
+            border-radius: 4px;
+            padding: 4px 2px;
             text-align: center;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
             color: var(--color-primary);
         }
 
         .hl-card i {
             color: var(--color-gold);
-            margin-right: 3px;
+            margin-right: 2px;
         }
 
         .quick-matrix {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 6px;
+            gap: 4px;
             background: var(--color-sand);
             border: 1px solid var(--color-border);
-            border-radius: 8px;
-            padding: 8px;
+            border-radius: 6px;
+            padding: 5px 8px;
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
         }
 
         .qm-item .qm-lbl {
-            font-size: 0.62rem;
+            font-size: 0.58rem;
             text-transform: uppercase;
             color: #888;
             font-weight: 700;
-            margin-bottom: 1px;
         }
 
         .qm-item .qm-val {
-            font-size: 0.82rem;
+            font-size: 0.78rem;
             font-weight: 800;
             color: var(--color-primary);
         }
@@ -305,37 +313,37 @@
         .inc-two-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 8px;
+            margin-bottom: 6px;
         }
 
         .inc-box {
             background: var(--color-sand);
             border: 1px solid var(--color-border);
-            border-radius: 8px;
-            padding: 9px 12px;
+            border-radius: 6px;
+            padding: 6px 10px;
         }
 
         .inc-box h4 {
-            font-size: 0.88rem;
-            margin-bottom: 4px;
+            font-size: 0.82rem;
+            margin-bottom: 3px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
 
         .inc-box ul {
-            padding-left: 15px;
-            font-size: 0.76rem;
-            line-height: 1.5;
+            padding-left: 14px;
+            font-size: 0.74rem;
+            line-height: 1.4;
             color: #555;
         }
 
-        /* PAGE 2 (PRICING, ROOMS & BATCH DATES) */
         .pdf-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 6px 0 10px;
-            border-radius: 8px;
+            margin: 4px 0 6px;
+            border-radius: 6px;
             overflow: hidden;
             border: 1px solid var(--color-border);
         }
@@ -343,15 +351,15 @@
         .pdf-table th {
             background: var(--color-primary);
             color: #fff;
-            padding: 8px 12px;
-            font-size: 0.78rem;
+            padding: 5px 8px;
+            font-size: 0.74rem;
             text-align: left;
         }
 
         .pdf-table td {
-            padding: 8px 12px;
+            padding: 5px 8px;
             border-bottom: 1px solid #eee;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         .pdf-table tr:nth-child(even) {
@@ -359,7 +367,7 @@
         }
 
         .price-badge {
-            font-size: 0.98rem;
+            font-size: 0.9rem;
             font-weight: 800;
             color: var(--color-primary);
         }
@@ -367,13 +375,12 @@
         .rooms-3-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 8px;
         }
 
         .r-card {
             border: 1px solid var(--color-border);
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
             background: var(--color-sand);
             text-align: center;
@@ -381,69 +388,41 @@
 
         .r-card img {
             width: 100%;
-            height: 95px;
+            height: 70px;
             object-fit: cover;
             display: block;
         }
 
         .r-card-body {
-            padding: 7px;
+            padding: 4px;
         }
 
         .r-card-body h4 {
-            font-size: 0.82rem;
-            margin-bottom: 2px;
+            font-size: 0.76rem;
+            margin-bottom: 1px;
         }
 
         .r-card-body p {
-            font-size: 0.72rem;
+            font-size: 0.68rem;
             color: #777;
             margin-bottom: 0;
         }
 
-        .batch-compact-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-
-        .b-chip {
-            background: var(--color-sand);
-            border: 1px solid var(--color-border);
-            border-radius: 6px;
-            padding: 8px 6px;
-            text-align: center;
-            font-size: 0.78rem;
-            font-weight: 800;
-            color: var(--color-primary);
-        }
-
-        .info-alert-box {
-            background: rgba(198, 159, 84, 0.12);
-            border: 1px solid var(--color-gold);
-            border-radius: 8px;
-            padding: 10px 14px;
-            font-size: 0.78rem;
-            line-height: 1.5;
-            color: #55483f;
-        }
-
-        /* PAGE 3 (SCHEDULE & CURRICULUM) */
+        /* PAGE 2 (SCHEDULE, CURRICULUM & BATCHES) */
         .schedule-grid-box {
             background: var(--color-sand);
             border: 1px solid var(--color-border);
-            border-radius: 8px;
-            padding: 8px 12px;
-            margin-bottom: 10px;
+            border-radius: 6px;
+            padding: 6px 10px;
+            margin-bottom: 6px;
         }
 
         .sch-row {
             display: grid;
-            grid-template-columns: 130px 1fr;
-            padding: 3.5px 0;
+            grid-template-columns: 120px 1fr;
+            padding: 2.5px 0;
             border-bottom: 1px dashed #e2d6c6;
-            font-size: 0.78rem;
+            font-size: 0.75rem;
         }
 
         .sch-row:last-child {
@@ -461,8 +440,8 @@
         }
 
         .module-item {
-            margin-bottom: 6px;
-            padding-bottom: 6px;
+            margin-bottom: 5px;
+            padding-bottom: 4px;
             border-bottom: 1px solid #f0e6d9;
         }
 
@@ -472,95 +451,123 @@
         }
 
         .module-item h4 {
-            font-size: 0.84rem;
-            margin-bottom: 2px;
+            font-size: 0.8rem;
+            margin-bottom: 1px;
             color: var(--color-primary);
         }
 
         .module-item p {
-            font-size: 0.76rem;
+            font-size: 0.74rem;
             margin-bottom: 0;
-            line-height: 1.45;
+            line-height: 1.38;
             color: #555;
         }
 
-        /* PAGE 4 (TRAVEL, PACKING, RULES & CONTACT) */
-        .page4-grid {
+        .batch-compact-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 10px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-bottom: 6px;
         }
 
-        .p4-box {
+        .b-chip {
             background: var(--color-sand);
             border: 1px solid var(--color-border);
-            border-radius: 8px;
-            padding: 9px 12px;
+            border-radius: 4px;
+            padding: 6px 4px;
+            text-align: center;
+            font-size: 0.74rem;
+            font-weight: 800;
+            color: var(--color-primary);
         }
 
-        .p4-box h4 {
-            font-size: 0.84rem;
+        .info-alert-box {
+            background: rgba(198, 159, 84, 0.12);
+            border: 1px solid var(--color-gold);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 0.74rem;
+            line-height: 1.4;
+            color: #55483f;
+        }
+
+        /* PAGE 3 (TRAVEL, PACKING, RULES, TERMS & CONTACT) */
+        .page3-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .p3-box {
+            background: var(--color-sand);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 7px 10px;
+        }
+
+        .p3-box h4 {
+            font-size: 0.8rem;
             color: var(--color-primary);
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
 
-        .p4-box p {
-            font-size: 0.76rem;
-            margin-bottom: 4px;
-            line-height: 1.45;
+        .p3-box p {
+            font-size: 0.74rem;
+            margin-bottom: 3px;
+            line-height: 1.38;
         }
 
-        .p4-box ul {
+        .p3-box ul {
             padding-left: 14px;
-            font-size: 0.75rem;
-            line-height: 1.48;
+            font-size: 0.73rem;
+            line-height: 1.4;
             color: #555;
         }
 
-        .p5-host-box {
+        .p3-host-box {
             background: linear-gradient(135deg, #2e1d17 0%, #4a2d21 100%);
             color: #fff;
-            border-radius: 10px;
-            padding: 14px 16px;
+            border-radius: 8px;
+            padding: 12px 14px;
             text-align: center;
             margin-top: auto;
         }
 
-        .p5-host-box h3 {
+        .p3-host-box h3 {
             color: #fff;
-            font-size: 1.2rem;
-            margin-bottom: 3px;
+            font-size: 1.1rem;
+            margin-bottom: 2px;
         }
 
-        .p5-host-box p {
+        .p3-host-box p {
             color: rgba(255,255,255,0.85);
-            font-size: 0.78rem;
-            margin-bottom: 8px;
+            font-size: 0.76rem;
+            margin-bottom: 6px;
         }
 
         .host-btns-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 6px;
         }
 
         .h-btn {
             background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.25);
             color: #fff;
-            padding: 6px 8px;
-            border-radius: 6px;
-            font-size: 0.74rem;
+            padding: 5px 6px;
+            border-radius: 4px;
+            font-size: 0.72rem;
             font-weight: 700;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 4px;
         }
 
         /* PRINT MEDIA QUERY (For Ctrl + P) */
@@ -582,7 +589,7 @@
                 height: 100vh !important;
                 max-height: 100vh !important;
                 margin: 0 !important;
-                padding: 25px 35px 15px 35px !important;
+                padding: 20px 30px 12px 30px !important;
                 box-shadow: none !important;
                 border-radius: 0 !important;
                 page-break-after: always !important;
@@ -607,11 +614,11 @@
         <div class="bar-left">
             <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Website</a>
             <span style="opacity: 0.4;">|</span>
-            <span style="font-size: 0.85rem; opacity: 0.9;">200-Hour TTC Official 4-Page Brochure</span>
+            <span style="font-size: 0.85rem; opacity: 0.9;">200-Hour TTC Official 3-Page Brochure</span>
         </div>
         <div class="bar-actions">
             <button onclick="downloadBrochurePDF()" class="btn-action btn-pdf-download" id="downloadBtn">
-                <i class="fas fa-file-pdf"></i> Download Clean 4-Page PDF
+                <i class="fas fa-file-pdf"></i> Download Clean 3-Page PDF
             </button>
             <a href="booking.html" class="btn-action btn-book-now">
                 <i class="fas fa-check-circle"></i> Reserve Online
@@ -619,11 +626,11 @@
         </div>
     </div>
 
-    <!-- MAIN 4-PAGE A4 DOCUMENT WRAPPER -->
+    <!-- MAIN 3-PAGE A4 DOCUMENT WRAPPER -->
     <div class="pdf-document-wrapper" id="brochureRoot">
 
         <!-- ==========================================
-             PAGE 1: OVERVIEW & INCLUSIONS
+             PAGE 1: OVERVIEW, INCLUSIONS, FEES & ROOMS
              ========================================== -->
         <div class="a4-page" id="page-1">
             <div class="page-header-micro">
@@ -632,22 +639,27 @@
             </div>
 
             <div class="page-content">
-                <div class="p1-brand-center">
+                <div class="p1-header-grid">
                     <img src="assets/images/logo-dark.png" alt="Shiva Yoga Logo" class="p1-logo">
-                    <span class="p1-badge"><i class="fas fa-award"></i> Yoga Alliance USA Accredited</span>
-                    <h1 class="p1-title">200-Hour Multi-Style Yoga Teacher Training</h1>
-                    <div class="p1-sub">Arambol Beach, North Goa &bull; 21-Day Residential Immersion</div>
+                    <div>
+                        <h1 class="p1-title">200-Hour Multi-Style Yoga Teacher Training</h1>
+                        <div class="p1-sub">Arambol Beach, North Goa &bull; 21-Day Residential Immersion</div>
+                    </div>
+                    <span class="p1-badge"><i class="fas fa-award"></i> 200 RYT USA</span>
                 </div>
 
-                <img src="assets/images/gallery-10.jpg" alt="Yoga Practice in Goa" class="p1-hero-img">
-
-                <div class="section-h2"><i class="fas fa-om"></i> About This Experience</div>
-                <p>
-                    This <strong>200-Hour Yoga Teacher Training Course</strong> in Arambol, Goa is a transformative 21-day residential journey designed for passionate practitioners and aspiring yoga teachers. Guided by traditional Indian yoga masters, you will establish a solid foundation in classical asanas, pranayama, functional anatomy, alignment, subtle energy, and Vedic philosophy.
-                </p>
-                <p>
-                    Our curriculum synthesizes traditional <strong>Hatha Yoga</strong>, dynamic <strong>Ashtanga Vinyasa</strong>, and modern teaching methodologies, empowering you with the practical tools and global credentials (200 RYT) to teach with depth, authenticity, and confidence anywhere in the world.
-                </p>
+                <div class="p1-hero-split">
+                    <img src="assets/images/gallery-10.jpg" alt="Yoga Practice in Goa" class="p1-hero-img">
+                    <div>
+                        <div class="section-h2" style="margin-top: 0;"><i class="fas fa-om"></i> About This Experience</div>
+                        <p>
+                            This <strong>200-Hour Yoga Teacher Training Course</strong> in Arambol, Goa is a transformative 21-day residential journey designed for practitioners and aspiring yoga teachers. Guided by traditional Indian masters, you will establish a solid foundation in classical asanas, pranayama, functional anatomy, alignment, subtle energy, and Vedic philosophy.
+                        </p>
+                        <p>
+                            Synthesizing traditional <strong>Hatha Yoga</strong>, dynamic <strong>Ashtanga Vinyasa</strong>, and modern teaching methodologies, you graduate with global credentials (200 RYT) to teach with authenticity and confidence worldwide.
+                        </p>
+                    </div>
+                </div>
 
                 <div class="highlights-strip">
                     <div class="hl-card"><i class="fas fa-check-circle"></i> Classical Hatha</div>
@@ -694,30 +706,12 @@
                         </ul>
                     </div>
                 </div>
-            </div>
 
-            <div class="page-footer-micro">
-                <span>Page 1 of 4</span>
-                <span>www.shivaretreats.com</span>
-                <span>Admissions: +91 74119 24193</span>
-            </div>
-        </div>
-
-        <!-- ==========================================
-             PAGE 2: PRICING, ROOMS & BATCH DATES
-             ========================================== -->
-        <div class="a4-page" id="page-2">
-            <div class="page-header-micro">
-                <span>200-Hour TTC &bull; Fees &amp; Accommodation</span>
-                <span>Shiva Yoga Goa</span>
-            </div>
-
-            <div class="page-content">
-                <div class="section-h2" style="margin-top: 0;"><i class="fas fa-tag"></i> Official Transparent Pricing</div>
+                <div class="section-h2"><i class="fas fa-tag"></i> Official Fee Schedule &amp; Rooms</div>
                 <table class="pdf-table">
                     <thead>
                         <tr>
-                            <th>Accommodation Type</th>
+                            <th>Accommodation Option</th>
                             <th>Description</th>
                             <th>Total Package (EUR)</th>
                         </tr>
@@ -725,23 +719,22 @@
                     <tbody>
                         <tr>
                             <td><strong>Dormitory (3–4 Same Gender)</strong></td>
-                            <td>Spacious eco-cottage with en-suite bathroom, fan &amp; locker</td>
-                            <td><span class="price-badge">€999</span> <span style="font-size:0.75rem; color:#777;">(~₹90,000)</span></td>
+                            <td>Spacious shared cottage with attached bath, fan &amp; locker</td>
+                            <td><span class="price-badge">€999</span> <span style="font-size:0.7rem; color:#777;">(~₹90,000)</span></td>
                         </tr>
                         <tr>
                             <td><strong>Private Deluxe Cottage</strong></td>
                             <td>King bed, attached private bathroom, work desk &amp; veranda</td>
-                            <td><span class="price-badge">€1,599</span> <span style="font-size:0.75rem; color:#777;">(~₹1,44,000)</span></td>
+                            <td><span class="price-badge">€1,599</span> <span style="font-size:0.7rem; color:#777;">(~₹1,44,000)</span></td>
                         </tr>
                         <tr>
                             <td><strong>Twin Sharing (Couple / Friends)</strong></td>
                             <td>Dedicated cottage for 2 friends or couple booking together</td>
-                            <td><span class="price-badge">€2,399</span> <span style="font-size:0.75rem; color:#777;">(Total for Two)</span></td>
+                            <td><span class="price-badge">€2,399</span> <span style="font-size:0.7rem; color:#777;">(Total for Two)</span></td>
                         </tr>
                     </tbody>
                 </table>
 
-                <div class="section-h2"><i class="fas fa-bed"></i> Accommodation Showcase</div>
                 <div class="rooms-3-grid">
                     <div class="r-card">
                         <img src="assets/images/gallery-18.jpg" alt="Dorm Room">
@@ -765,35 +758,19 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="section-h2"><i class="fas fa-calendar-alt"></i> Upcoming Monthly Batch Dates</div>
-                <p style="color: #666; font-size: 0.8rem; margin-top: -3px; margin-bottom: 8px;">All courses start on the <strong>2nd of every month</strong>. Batch capacity is strictly capped at 15–20 students.</p>
-                <div class="batch-compact-grid">
-                    <div class="b-chip">Oct 2 &ndash; Oct 22, 2026</div>
-                    <div class="b-chip">Nov 2 &ndash; Nov 22, 2026</div>
-                    <div class="b-chip">Dec 2 &ndash; Dec 22, 2026</div>
-                    <div class="b-chip">Jan 2 &ndash; Jan 22, 2027</div>
-                    <div class="b-chip">Feb 2 &ndash; Feb 22, 2027</div>
-                    <div class="b-chip">Mar 2 &ndash; Mar 22, 2027</div>
-                </div>
-
-                <div class="info-alert-box">
-                    <strong><i class="fas fa-info-circle"></i> Reservation &amp; Deposit Policy:</strong><br>
-                    To guarantee your seat and cottage allocation, an advance registration deposit is required. Deposits are non-refundable but <strong>100% transferable to any future batch within 24 months</strong>. The remaining balance is cleared at check-in on campus.
-                </div>
             </div>
 
             <div class="page-footer-micro">
-                <span>Page 2 of 4</span>
+                <span>Page 1 of 3</span>
                 <span>www.shivaretreats.com</span>
                 <span>Admissions: +91 74119 24193</span>
             </div>
         </div>
 
         <!-- ==========================================
-             PAGE 3: DAILY SCHEDULE & CURRICULUM
+             PAGE 2: SCHEDULE, CURRICULUM & BATCH DATES
              ========================================== -->
-        <div class="a4-page" id="page-3">
+        <div class="a4-page" id="page-2">
             <div class="page-header-micro">
                 <span>200-Hour TTC &bull; Schedule &amp; Syllabus</span>
                 <span>Shiva Yoga Goa</span>
@@ -841,19 +818,34 @@
                     <h4>5. Teaching Practicum &amp; Voice Modulation</h4>
                     <p>Hands-on teaching drills starting from Week 1. Real-time class delivery, cueing, time management, student observation, adjustments, overcoming teaching anxiety, and Yoga Alliance registration guidance.</p>
                 </div>
+
+                <div class="section-h2"><i class="fas fa-calendar-alt"></i> Upcoming Monthly Batch Dates</div>
+                <div class="batch-compact-grid">
+                    <div class="b-chip">Oct 2 &ndash; Oct 22, 2026</div>
+                    <div class="b-chip">Nov 2 &ndash; Nov 22, 2026</div>
+                    <div class="b-chip">Dec 2 &ndash; Dec 22, 2026</div>
+                    <div class="b-chip">Jan 2 &ndash; Jan 22, 2027</div>
+                    <div class="b-chip">Feb 2 &ndash; Feb 22, 2027</div>
+                    <div class="b-chip">Mar 2 &ndash; Mar 22, 2027</div>
+                </div>
+
+                <div class="info-alert-box">
+                    <strong><i class="fas fa-info-circle"></i> Reservation &amp; Deposit Policy:</strong>
+                    Advance registration deposit is required to confirm your seat. Deposits are non-refundable but <strong>100% transferable to any future batch within 24 months</strong>. Remaining balance is cleared at check-in on campus.
+                </div>
             </div>
 
             <div class="page-footer-micro">
-                <span>Page 3 of 4</span>
+                <span>Page 2 of 3</span>
                 <span>www.shivaretreats.com</span>
                 <span>Admissions: +91 74119 24193</span>
             </div>
         </div>
 
         <!-- ==========================================
-             PAGE 4: TRAVEL, PACKING, RULES & CONTACT
+             PAGE 3: TRAVEL, PACKING, RULES, TERMS & CONTACT
              ========================================== -->
-        <div class="a4-page" id="page-4">
+        <div class="a4-page" id="page-3">
             <div class="page-header-micro">
                 <span>200-Hour TTC &bull; Travel, Rules &amp; Contact</span>
                 <span>Shiva Yoga Goa</span>
@@ -861,15 +853,15 @@
 
             <div class="page-content">
                 <div class="section-h2" style="margin-top: 0;"><i class="fas fa-plane-arrival"></i> Travel &amp; Packing Guide</div>
-                <div class="page4-grid">
-                    <div class="p4-box">
+                <div class="page3-grid">
+                    <div class="p3-box">
                         <h4><i class="fas fa-map-marker-alt" style="color: var(--color-gold);"></i> How to Reach Arambol, Goa</h4>
                         <p><strong>&bull; MOPA Airport (GOX):</strong> 35–40 mins (28 km) drive.</p>
                         <p><strong>&bull; Dabolim Airport (GOI):</strong> 85–90 mins (60 km) drive.</p>
                         <p><strong>&bull; Train:</strong> Pernem (20 mins) / Thivim (35 mins).</p>
                         <p><strong>&bull; Taxi Pickups:</strong> Available on request with our trusted ashram drivers.</p>
                     </div>
-                    <div class="p4-box">
+                    <div class="p3-box">
                         <h4><i class="fas fa-suitcase-rolling" style="color: var(--color-gold);"></i> Things to Bring</h4>
                         <ul>
                             <li>Comfortable yoga wear + <strong>white attire</strong> for ceremonies</li>
@@ -882,7 +874,7 @@
                 </div>
 
                 <div class="section-h2"><i class="fas fa-shield-alt"></i> Ashram Rules &amp; Code of Discipline</div>
-                <div class="p4-box" style="margin-bottom: 10px;">
+                <div class="p3-box" style="margin-bottom: 6px;">
                     <ul>
                         <li><strong>100% Substance-Free:</strong> Strictly vegetarian, smoke-free, alcohol-free, and drug-free sanctuary.</li>
                         <li><strong>Outside Curfew:</strong> All students must return inside the ashram premises by <strong>10:30 PM</strong> for campus security.</li>
@@ -892,14 +884,14 @@
                 </div>
 
                 <div class="section-h2"><i class="fas fa-file-contract"></i> Check-in &amp; Cancellation Policy</div>
-                <div class="p4-box" style="margin-bottom: 14px;">
+                <div class="p3-box" style="margin-bottom: 8px;">
                     <p><strong>&bull; Check-in &amp; Check-out:</strong> Check-in is at 10:00 AM on the 2nd; Check-out is by 2:00 PM on the 22nd (Includes 1 complimentary extra night).</p>
                     <p><strong>&bull; Deposit &amp; Transfer:</strong> Deposits are non-refundable but 100% transferable to future dates within 24 months.</p>
                     <p><strong>&bull; Payment Fees:</strong> PayPal 5% surcharge; Card swipe 3%; Cash accepted in INR.</p>
                 </div>
 
                 <!-- Host Contact Box -->
-                <div class="p5-host-box">
+                <div class="p3-host-box">
                     <h3>Reserve Your Journey With Shiva Yoga</h3>
                     <p>Have questions about applications, visas, or room availability? Connect directly with our admissions team:</p>
                     <div class="host-btns-grid">
@@ -917,7 +909,7 @@
             </div>
 
             <div class="page-footer-micro">
-                <span>Page 4 of 4</span>
+                <span>Page 3 of 3</span>
                 <span>www.shivaretreats.com</span>
                 <span>Admissions: +91 74119 24193</span>
             </div>
@@ -925,12 +917,12 @@
 
     </div>
 
-    <!-- Script for Exact 4-Page PDF Generation -->
+    <!-- Script for Exact 3-Page PDF Generation -->
     <script>
         async function downloadBrochurePDF() {
             const btn = document.getElementById('downloadBtn');
             const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating 4-Page PDF...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating 3-Page PDF...';
             btn.disabled = true;
 
             try {
@@ -945,8 +937,7 @@
                 const pages = [
                     document.getElementById('page-1'),
                     document.getElementById('page-2'),
-                    document.getElementById('page-3'),
-                    document.getElementById('page-4')
+                    document.getElementById('page-3')
                 ];
 
                 for (let i = 0; i < pages.length; i++) {
