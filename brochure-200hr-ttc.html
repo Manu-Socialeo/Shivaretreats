@@ -12,9 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" href="assets/images/logo-dark.png" type="image/png">
 
-    <!-- html2canvas and jsPDF for exact 3-page PDF generation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- html2pdf.js for vector text and clickable hyperlink preservation in downloaded PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
         :root {
@@ -135,6 +134,8 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            page-break-after: always;
+            break-after: page;
         }
 
         /* Running Header & Footer */
@@ -188,6 +189,11 @@
             line-height: 1.5;
             color: #4a3e39;
             margin-bottom: 4px;
+        }
+
+        a {
+            color: var(--color-gold-dark);
+            text-decoration: none;
         }
 
         .section-h2 {
@@ -313,6 +319,11 @@
             color: var(--color-primary);
         }
 
+        .qm-item .qm-val a {
+            color: var(--color-primary);
+            text-decoration: underline;
+        }
+
         .inc-two-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -387,6 +398,9 @@
             overflow: hidden;
             background: var(--color-sand);
             text-align: center;
+            display: block;
+            text-decoration: none;
+            color: inherit;
         }
 
         .r-card img {
@@ -403,6 +417,7 @@
         .r-card-body h4 {
             font-size: 0.78rem;
             margin-bottom: 1px;
+            color: var(--color-primary);
         }
 
         .r-card-body p {
@@ -482,6 +497,13 @@
             font-size: 0.76rem;
             font-weight: 800;
             color: var(--color-primary);
+            display: block;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .b-chip:hover {
+            background: rgba(198, 159, 84, 0.2);
         }
 
         .info-alert-box {
@@ -554,26 +576,33 @@
 
         .host-btns-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
         }
 
         .h-btn {
             background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.25);
             color: #fff;
-            padding: 7px 8px;
+            padding: 7px 6px;
             border-radius: 4px;
-            font-size: 0.75rem;
+            font-size: 0.74rem;
             font-weight: 700;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 5px;
+            transition: all 0.2s;
         }
 
-        /* PRINT MEDIA QUERY (For Ctrl + P) */
+        .h-btn:hover {
+            background: var(--color-gold);
+            border-color: var(--color-gold);
+            color: #fff;
+        }
+
+        /* PRINT MEDIA QUERY */
         @media print {
             .top-action-bar, .floating-actions, #shiva-chatbot-root {
                 display: none !important;
@@ -617,7 +646,7 @@
         <div class="bar-left">
             <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Website</a>
             <span style="opacity: 0.4;">|</span>
-            <span style="font-size: 0.85rem; opacity: 0.9;">200-Hour TTC Official Brochure</span>
+            <span style="font-size: 0.85rem; opacity: 0.9;">200-Hour TTC Official Brochure (Interactive PDF)</span>
         </div>
         <div class="bar-actions">
             <button onclick="downloadBrochurePDF()" class="btn-action btn-pdf-download" id="downloadBtn">
@@ -677,7 +706,7 @@
 
                 <div class="quick-matrix">
                     <div class="qm-item"><div class="qm-lbl">Duration</div><div class="qm-val">21 Days</div></div>
-                    <div class="qm-item"><div class="qm-lbl">Location</div><div class="qm-val">Arambol, Goa</div></div>
+                    <div class="qm-item"><div class="qm-lbl">Location</div><div class="qm-val"><a href="https://maps.google.com/?q=Shiva+Yoga+Arambol+Goa" target="_blank">Arambol, Goa</a></div></div>
                     <div class="qm-item"><div class="qm-lbl">Certificate</div><div class="qm-val">200 RYT USA</div></div>
                     <div class="qm-item"><div class="qm-lbl">Min. Age</div><div class="qm-val">18 Years</div></div>
                     <div class="qm-item"><div class="qm-lbl">Intake Cap</div><div class="qm-val">15–20 Seats</div></div>
@@ -739,34 +768,34 @@
                 </table>
 
                 <div class="rooms-3-grid">
-                    <div class="r-card">
+                    <a href="https://shivaretreats.vercel.app/booking.html" target="_blank" class="r-card">
                         <img src="assets/images/gallery-18.jpg" alt="Dorm Room">
                         <div class="r-card-body">
                             <h4>Shared Dorm (3–4)</h4>
-                            <p>Included in €999 package</p>
+                            <p>Included in €999 package &rarr;</p>
                         </div>
-                    </div>
-                    <div class="r-card">
+                    </a>
+                    <a href="https://shivaretreats.vercel.app/booking.html" target="_blank" class="r-card">
                         <img src="assets/images/gallery-20.jpg" alt="Private Cottage">
                         <div class="r-card-body">
                             <h4>Private Deluxe</h4>
-                            <p>€1,599 single occupancy</p>
+                            <p>€1,599 single occupancy &rarr;</p>
                         </div>
-                    </div>
-                    <div class="r-card">
+                    </a>
+                    <a href="https://shivaretreats.vercel.app/booking.html" target="_blank" class="r-card">
                         <img src="assets/images/gallery-36.jpg" alt="Twin Cottage">
                         <div class="r-card-body">
                             <h4>Twin Sharing</h4>
-                            <p>€2,399 for two people</p>
+                            <p>€2,399 for two people &rarr;</p>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
             <div class="page-footer-micro">
                 <span>Page 1 of 3</span>
-                <span>www.shivaretreats.com</span>
-                <span>Admissions: +91 74119 24193</span>
+                <span><a href="https://shivaretreats.vercel.app" target="_blank">www.shivaretreats.com</a></span>
+                <span>Admissions: <a href="https://wa.me/917411924193" target="_blank">+91 74119 24193</a></span>
             </div>
         </div>
 
@@ -824,12 +853,12 @@
 
                 <div class="section-h2"><i class="fas fa-calendar-alt"></i> Upcoming Monthly Batch Dates</div>
                 <div class="batch-compact-grid">
-                    <div class="b-chip">Oct 2 &ndash; Oct 22, 2026</div>
-                    <div class="b-chip">Nov 2 &ndash; Nov 22, 2026</div>
-                    <div class="b-chip">Dec 2 &ndash; Dec 22, 2026</div>
-                    <div class="b-chip">Jan 2 &ndash; Jan 22, 2027</div>
-                    <div class="b-chip">Feb 2 &ndash; Feb 22, 2027</div>
-                    <div class="b-chip">Mar 2 &ndash; Mar 22, 2027</div>
+                    <a href="https://shivaretreats.vercel.app/booking.html" target="_blank" class="b-chip">Oct 2 &ndash; Oct 22, 2026 &rarr;</a>
+                    <a href="https://shivaretreats.vercel.app/booking.html" target="_blank" class="b-chip">Nov 2 &ndash; Nov 22, 2026 &rarr;</a>
+                    <a href="https://shivaretreats.vercel.app/booking.html" target="_blank" class="b-chip">Dec 2 &ndash; Dec 22, 2026 &rarr;</a>
+                    <a href="https://shivaretreats.vercel.app/booking.html" target="_blank" class="b-chip">Jan 2 &ndash; Jan 22, 2027 &rarr;</a>
+                    <a href="https://shivaretreats.vercel.app/booking.html" target="_blank" class="b-chip">Feb 2 &ndash; Feb 22, 2027 &rarr;</a>
+                    <a href="https://shivaretreats.vercel.app/booking.html" target="_blank" class="b-chip">Mar 2 &ndash; Mar 22, 2027 &rarr;</a>
                 </div>
 
                 <div class="info-alert-box">
@@ -840,8 +869,8 @@
 
             <div class="page-footer-micro">
                 <span>Page 2 of 3</span>
-                <span>www.shivaretreats.com</span>
-                <span>Admissions: +91 74119 24193</span>
+                <span><a href="https://shivaretreats.vercel.app" target="_blank">www.shivaretreats.com</a></span>
+                <span>Admissions: <a href="https://wa.me/917411924193" target="_blank">+91 74119 24193</a></span>
             </div>
         </div>
 
@@ -862,7 +891,7 @@
                         <p><strong>&bull; MOPA Airport (GOX):</strong> 35–40 mins (28 km) drive.</p>
                         <p><strong>&bull; Dabolim Airport (GOI):</strong> 85–90 mins (60 km) drive.</p>
                         <p><strong>&bull; Train:</strong> Pernem (20 mins) / Thivim (35 mins).</p>
-                        <p><strong>&bull; Taxi Pickups:</strong> Available on request with our trusted ashram drivers.</p>
+                        <p><strong>&bull; Google Maps:</strong> <a href="https://maps.google.com/?q=Shiva+Yoga+Arambol+Goa" target="_blank" style="font-weight: 700; text-decoration: underline;"><i class="fas fa-directions"></i> Tap For Live Directions &rarr;</a></p>
                     </div>
                     <div class="p3-box">
                         <h4><i class="fas fa-suitcase-rolling" style="color: var(--color-gold);"></i> Things to Bring</h4>
@@ -898,14 +927,17 @@
                     <h3>Reserve Your Journey With Shiva Yoga</h3>
                     <p>Have questions about applications, visas, or room availability? Connect directly with our admissions team:</p>
                     <div class="host-btns-grid">
-                        <a href="https://wa.me/917411924193" target="_blank" class="h-btn">
-                            <i class="fab fa-whatsapp" style="color: #25d366;"></i> WhatsApp Us
+                        <a href="https://wa.me/917411924193?text=Namaste!%20I%20am%20interested%20in%20200-Hour%20Yoga%20TTC%20in%20Goa" target="_blank" class="h-btn">
+                            <i class="fab fa-whatsapp" style="color: #25d366;"></i> WhatsApp
                         </a>
-                        <a href="mailto:contact@shivaretreats.com" class="h-btn">
-                            <i class="fas fa-envelope" style="color: var(--color-gold);"></i> Email Admissions
+                        <a href="https://www.instagram.com/shivayoga.goa" target="_blank" class="h-btn">
+                            <i class="fab fa-instagram" style="color: #e1306c;"></i> Instagram
                         </a>
-                        <a href="https://shivaretreats.vercel.app/booking.html" target="_blank" class="h-btn">
-                            <i class="fas fa-check-circle" style="color: #25d366;"></i> Book Online
+                        <a href="https://maps.google.com/?q=Shiva+Yoga+Arambol+Goa" target="_blank" class="h-btn">
+                            <i class="fas fa-map-marked-alt" style="color: #3897f0;"></i> Location
+                        </a>
+                        <a href="https://shivaretreats.vercel.app/booking.html" target="_blank" class="h-btn" style="background: var(--color-gold); border-color: var(--color-gold);">
+                            <i class="fas fa-check-circle" style="color: #fff;"></i> Book Now
                         </a>
                     </div>
                 </div>
@@ -913,64 +945,51 @@
 
             <div class="page-footer-micro">
                 <span>Page 3 of 3</span>
-                <span>www.shivaretreats.com</span>
-                <span>Admissions: +91 74119 24193</span>
+                <span><a href="https://shivaretreats.vercel.app" target="_blank">www.shivaretreats.com</a></span>
+                <span>Admissions: <a href="https://wa.me/917411924193" target="_blank">+91 74119 24193</a></span>
             </div>
         </div>
 
     </div>
 
-    <!-- Script for Exact 3-Page PDF Generation -->
+    <!-- Script for Vector PDF Generation with Preserved Clickable Hyperlinks -->
     <script>
-        async function downloadBrochurePDF() {
+        function downloadBrochurePDF() {
             const btn = document.getElementById('downloadBtn');
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
             btn.disabled = true;
 
-            try {
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({
-                    orientation: 'portrait',
-                    unit: 'mm',
-                    format: 'a4',
-                    compress: true
-                });
+            const element = document.getElementById('brochureRoot');
+            const opt = {
+                margin: 0,
+                filename: 'Shiva-Yoga-Goa-200Hr-TTC-Brochure.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                enableLinks: true, // Preserves clickable hyperlinks in the PDF
+                html2canvas: { 
+                    scale: 2, 
+                    useCORS: true, 
+                    logging: false,
+                    backgroundColor: '#ffffff',
+                    width: 794
+                },
+                jsPDF: { 
+                    unit: 'mm', 
+                    format: 'a4', 
+                    orientation: 'portrait' 
+                },
+                pagebreak: { mode: ['css', 'legacy'], after: '.a4-page' }
+            };
 
-                const pages = [
-                    document.getElementById('page-1'),
-                    document.getElementById('page-2'),
-                    document.getElementById('page-3')
-                ];
-
-                for (let i = 0; i < pages.length; i++) {
-                    const pageEl = pages[i];
-                    if (i > 0) {
-                        pdf.addPage('a4', 'portrait');
-                    }
-
-                    const canvas = await html2canvas(pageEl, {
-                        scale: 2,
-                        useCORS: true,
-                        logging: false,
-                        backgroundColor: '#ffffff',
-                        width: 794,
-                        height: 1123,
-                        windowWidth: 794
-                    });
-
-                    const imgData = canvas.toDataURL('image/jpeg', 0.95);
-                    pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
-                }
-
-                pdf.save('Shiva-Yoga-Goa-200Hr-TTC-Brochure.pdf');
-            } catch (err) {
-                console.error("PDF generation error:", err);
-                window.print();
-            } finally {
+            html2pdf().set(opt).from(element).save().then(() => {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
-            }
+            }).catch(err => {
+                console.error("PDF generation fallback:", err);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                window.print();
+            });
         }
     </script>
 </body>
