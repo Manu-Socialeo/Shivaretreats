@@ -81,6 +81,10 @@ TONE & STYLE:
 function getFallbackResponse(userMsg) {
     const q = userMsg.toLowerCase();
     
+        if (q.includes('kundalini') || q.includes('chakra') || q.includes('kriya')) {
+        return "Namaste! 🙏 Our **Kundalini Yoga & Chakra Awakening Retreat** in Arambol, Goa is a transformative journey into Tantric Kriyas, Bija Mantras, energy locks (Bandhas), and 7-Chakra balancing:\n\n• **Dorm (3–4 same gender):** €599 (~₹54,000)\n• **Private Room:** €899\n• **Twin Sharing (2 people):** €1,299\n\nIncludes daily Kundalini kriyas, sound baths, sattvic meals, manual, and ashram cottage stay!\n\n👉 [View Kundalini Program Details](courses/kundalini-yoga.html) or [Book Kundalini Retreat](booking.html)";
+    }
+
     if (q.includes('price') || q.includes('cost') || q.includes('fee') || q.includes('how much') || q.includes('charge') || q.includes('rate')) {
         if (q.includes('300')) {
             return "Namaste! 🙏 The **300-Hour Advanced Yoga TTC (29 Days)** fees are:\n\n• **Dorm (3–4 same gender):** €1,199\n• **Private Room:** €1,799\n• **Twin Sharing (2 people):** €2,999\n\nIncludes tuition, meals, manual, yoga bag, t-shirt, and accommodation + 1 complimentary night!\n\n👉 [Book 300-Hr TTC Now](booking.html) or [Chat with Admissions on WhatsApp](https://wa.me/917411924193)";
